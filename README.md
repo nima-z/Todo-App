@@ -1,4 +1,4 @@
-#Todo application
+# Todo application
 
 Goals: using "React, mongoDb, Node, Express"
 
