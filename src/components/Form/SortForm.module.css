@@ -1,0 +1,18 @@
+.sort {
+  background-color: #495057;
+  padding: 0.4rem 0;
+  color: white;
+  font-weight: 700;
+  position: relative;
+}
+
+.sort label {
+  margin-right: 1rem;
+}
+
+.select {
+  padding: 0.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}

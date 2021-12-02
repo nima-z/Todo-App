@@ -1,0 +1,51 @@
+.form {
+  background-color: #6c757d;
+  width: 350px;
+  height: 100px;
+  margin: 2rem auto 0;
+  padding: 1.4rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px 10px 0 0;
+  font-weight: 500;
+  background-color: rgb(187, 187, 187);
+}
+
+.form input {
+  display: block;
+  width: 140px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
+.form select {
+  display: block;
+  margin-top: 0.4rem;
+  padding: 0.2rem;
+}
+
+.input label {
+  display: inline-block;
+  text-align: left;
+}
+
+.actions {
+  align-self: flex-end;
+}
+
+.actions button {
+  background: none;
+  width: 25px;
+  height: 25px;
+  border: hidden;
+  font-size: 25px;
+  color: rgb(79, 129, 79);
+}
+
+.actions button:active {
+  border: hidden;
+  font-size: 25px;
+  color: rgb(211, 56, 56);
+}
