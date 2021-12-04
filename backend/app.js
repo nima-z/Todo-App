@@ -14,7 +14,6 @@ app.use((req, res, next) => {
   throw new HttpError("This route does not exist.", 404);
 });
 
-//Global error handling
 app.use((error, req, res, next) => {
   res
     .status(error.code || 500)
