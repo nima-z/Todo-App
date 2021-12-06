@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const usersRoutes = require("./Routes/users-routes");
 const HttpError = require("./Models/http-error");
@@ -20,6 +21,15 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "Unknown error occured" });
 });
 
-app.listen(5000, (req, res) => {
-  console.log("listening on port 5000");
-});
+mongoose
+  .connect(
+    "mongodb+srv://nima:9EMmGaolDZRb7lIt@cluster0.y9aro.mongodb.net/todoApp?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    app.listen(5000, (req, res) => {
+      console.log("listening on port 5000");
+    });
+  })
+  .catch((err) => {
+    res.json({ message: "Failed Connection to DataBase" });
+  });

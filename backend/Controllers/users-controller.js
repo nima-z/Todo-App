@@ -1,31 +1,21 @@
 const HttpError = require("../Models/http-error");
-const { v4: uuidv4 } = require("uuid");
+// const { v4: uuidv4 } = require("uuid");
+const User = require("../Models/users-model");
 
-let DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "nima",
-    email: "nima@yahoo.com",
-    password: "testpass1",
-    tasks: [],
-  },
-];
-
-function createNewUser(req, res, next) {
+async function createNewUser(req, res, next) {
   const { name, email, password } = req.body;
-  const hasUser = DUMMY_USERS.find((u) => u.email === email);
+  const hasUser = await User.findOne({ email: email });
   if (hasUser) {
-    throw new HttpError("This email already exists", 422);
+    return next(new HttpError("This email exist already", 403));
   }
-  const createdUser = {
-    id: uuidv4(),
-    name,
-    email,
-    password,
-    tasks: [],
-  };
-  DUMMY_USERS.push(createdUser);
-  res.status(201).json({ message: "New user created" });
+  const createdUser = new User({ name, email, password, tasks: [] });
+  try {
+    await createdUser.save();
+  } catch (err) {
+    next(new HttpError("could not create a new user", 403));
+  }
+
+  res.status(201).json({ message: "user created and saved into the DataBase" });
 }
 
 function login(req, res, next) {
