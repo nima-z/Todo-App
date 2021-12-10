@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.get("/:uid", taskControllers.getAllTasks); //show all task of specific user
 
-router.post("/:uid", taskControllers.createNewTask); //create a task of specific user
+router.post("/", taskControllers.createNewTask); //create a task of specific user
+
+router.delete("/:tid", taskControllers.deleteTask);
 
 module.exports = router;

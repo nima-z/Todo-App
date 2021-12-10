@@ -1,0 +1,21 @@
+.form {
+  margin-top: 4rem;
+  font-weight: 700;
+}
+
+.form input {
+  border: 1px solid rgb(144, 140, 140);
+  border-radius: 5px;
+  margin-bottom: 0.7rem;
+  width: 250px;
+  padding: 0.4rem 0.5rem;
+  font-size: 14px;
+}
+
+.form label {
+  margin-bottom: 0.2rem;
+}
+
+.form Button {
+  margin-top: 2rem;
+}
