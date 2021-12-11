@@ -43,7 +43,7 @@ function SignupForm(props) {
         }),
       });
       const responseData = await response.json();
-      console.log(formData);
+      console.log(responseData);
     } catch (err) {
       console.log(err);
     }

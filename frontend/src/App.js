@@ -1,20 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Routes, Route, Redirect } from "react-router-dom";
 
 // import TodoList from "./components/Todo/TodoList";
 // import InputForm from "./components/Form/InputForm";
+import MainHeader from "./components/Navigation/MainHeader";
 import AuthPage from "./pages/Authentication/AuthPage";
-import Header from "./components/Nav/Header";
+import MainPage from "./pages/Tasks/MainPage";
+import NewTask from "./pages/Tasks/NewTask";
+import EditTask from "./pages/Tasks/EditTask";
 
 import "./App.css";
 
 function App() {
   return (
     <Fragment>
-      <Header />
+      <MainHeader />
       <Routes>
-        <Route path="/authentication" exact element={<AuthPage />} />
-        <Route path="*" element={<AuthPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/:uid/" element={<MainPage />} />
+        <Route path="/:uid/newtask" element={<NewTask />} />
+        <Route path="/:uid/edittask" element={<EditTask />} />
+        <Route path="*" element={<MainPage />} />
       </Routes>
     </Fragment>
   );

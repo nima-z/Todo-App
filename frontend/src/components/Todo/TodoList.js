@@ -1,17 +1,22 @@
-import Dummy_Data from "../../Dummy_Data";
 import TodoItem from "./TodoItem";
 import SortForm from "../Form/SortForm";
 
 import styles from "./TodoList.module.css";
 
-function TodoList() {
+function TodoList(props) {
+  if (props.items.length === 0) {
+    return (
+      <div>
+        <h2>No task found.</h2>
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
-      {/* <div className={styles.sort}></div> */}
       <SortForm />
       <div className={styles.list}>
         <ul>
-          {Dummy_Data.map((todo) => (
+          {props.items.map((todo) => (
             <TodoItem
               title={todo.title}
               id={todo.id}

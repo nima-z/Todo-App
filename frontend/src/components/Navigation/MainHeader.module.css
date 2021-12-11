@@ -13,12 +13,3 @@
   font-weight: 900;
   font-size: 18px;
 }
-.nav ul {
-  list-style: none;
-  font-weight: 700;
-}
-
-.nav li {
-  display: inline-block;
-  margin-left: 1rem;
-}
