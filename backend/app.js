@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const usersRoutes = require("./Routes/users-routes");
 const tasksRoutes = require("./Routes/tasks-routes");
@@ -11,16 +12,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
 
-  next();
-});
+//   next();
+// });
+
+app.use(cors());
 
 app.use("/api/users", usersRoutes);
 app.use("/api/tasks", tasksRoutes);

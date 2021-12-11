@@ -4,6 +4,7 @@ const User = require("../Models/users-model");
 // create new user
 async function createNewUser(req, res, next) {
   const { name, email, password } = req.body;
+  console.log(name, email);
   let hasUser;
   try {
     hasUser = await User.findOne({ email: email });
