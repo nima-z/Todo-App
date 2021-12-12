@@ -1,9 +1,9 @@
-import { Fragment, useState } from "react";
-import { Routes, Route, Redirect } from "react-router-dom";
+import { Fragment } from "react";
+import { Routes, Route } from "react-router-dom";
 
 // import TodoList from "./components/Todo/TodoList";
 // import InputForm from "./components/Form/InputForm";
-import MainHeader from "./components/Navigation/MainHeader";
+// import MainHeader from "./components/Navigation/MainHeader";
 import AuthPage from "./pages/Authentication/AuthPage";
 import MainPage from "./pages/Tasks/MainPage";
 import NewTask from "./pages/Tasks/NewTask";
@@ -14,13 +14,13 @@ import "./App.css";
 function App() {
   return (
     <Fragment>
-      <MainHeader />
+      {/* <MainHeader /> */}
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/:uid/" element={<MainPage />} />
         <Route path="/:uid/newtask" element={<NewTask />} />
         <Route path="/:uid/edittask" element={<EditTask />} />
-        <Route path="*" element={<MainPage />} />
+        <Route path="*" element={<AuthPage />} />
       </Routes>
     </Fragment>
   );

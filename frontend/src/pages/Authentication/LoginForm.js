@@ -1,6 +1,7 @@
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import Buttons from "../../components/UI/Buttons";
+import InputForm from "../../components/Form/InputForm";
 
 import styles from "./LoginForm.module.css";
 
@@ -8,10 +9,22 @@ function LoginForm(props) {
   return (
     <form className={styles.form}>
       <Flex direction="column" align="flex-start">
-        <label htmlFor="email">Email</label>
-        <input type="email" id="email" placeholder="example@something.com" />
-        <label htmlFor="password">Password</label>
-        <input type="password" id="password" placeholder="+6 character" />
+        <InputForm
+          type="email"
+          title="email"
+          label="Email"
+          placeHolder="example@something.com"
+          validators={[]}
+          errorText="Please enter a valid email"
+        />
+        <InputForm
+          type="password"
+          title="password"
+          label="Password"
+          placeHolder="+6 character"
+          validators={[]}
+          errorText="Please enter a valid password"
+        />
       </Flex>
       <Buttons>Login</Buttons>
       <p>

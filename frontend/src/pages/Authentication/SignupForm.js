@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 import Buttons from "../../components/UI/Buttons";
+import InputForm from "../../components/Form/InputForm";
 
 import styles from "./SignupForm.module.css";
 
@@ -12,30 +13,13 @@ function SignupForm(props) {
     password: "",
   });
 
-  function nameHandler(e) {
-    setFormData((prev) => {
-      return { ...prev, name: e.target.value };
-    });
-    console.log(formData);
-  }
-  function emailHandler(e) {
-    setFormData((prev) => {
-      return { ...prev, email: e.target.value };
-    });
-  }
-  function passwordHandler(e) {
-    setFormData((prev) => {
-      return { ...prev, password: e.target.value };
-    });
-  }
-
   async function submitHandler(event) {
     event.preventDefault();
 
     try {
       const response = await fetch("http://localhost:5000/api/users/signup", {
         method: "POST",
-        headers: { "Type-Content": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -52,36 +36,41 @@ function SignupForm(props) {
   return (
     <form className={styles.form} onSubmit={submitHandler}>
       <Flex direction="column" align="flex-start">
-        <label htmlFor="name">Name</label>
-        <input
+        <InputForm
           type="text"
-          id="name"
-          placeholder="enter your name"
-          onChange={nameHandler}
+          title="name"
+          label="Name"
+          placeHolder="Enter your name"
+          validators={[]}
+          errorText="Please enter a valid name"
         />
-        <label htmlFor="email">Email</label>
-        <input
+        <InputForm
           type="email"
-          id="email"
-          placeholder="example@something.com"
-          onChange={emailHandler}
+          title="email"
+          label="Email"
+          placeHolder="example@something.com"
+          validators={[]}
+          errorText="Please enter a valid email"
         />
-        <label htmlFor="password">Password</label>
-        <input
+        <InputForm
           type="password"
-          id="password"
-          placeholder="+6 character"
-          onChange={passwordHandler}
+          title="password"
+          label="Password"
+          placeHolder="+6 character"
+          validators={[]}
+          errorText="Please enter a valid password"
         />
       </Flex>
       <Buttons type="submit">Sign up</Buttons>
-      <p>
-        Already have an account?{" "}
-        <button type="button" onClick={props.onLogin}>
-          Login
-        </button>
-        .
-      </p>
+      <div className={styles.footer}>
+        <p>
+          Already have an account?
+          <button type="button" onClick={props.onLogin}>
+            Login
+          </button>
+          .
+        </p>
+      </div>
     </form>
   );
 }

@@ -1,6 +1,5 @@
 .form {
   margin-top: 4rem;
-  font-weight: 700;
   max-width: 250px;
 }
 
@@ -8,22 +7,27 @@
   border: 1px solid rgb(144, 140, 140);
   width: 250px;
   border-radius: 5px;
-  margin-bottom: 0.7rem;
   padding: 0.4rem 0.5rem;
   font-size: 14px;
 }
 
 .form label {
   margin-bottom: 0.2rem;
+  margin-top: 0.7rem;
+  font-weight: 700;
 }
 
-.form Button {
+.form > Button {
   margin-top: 2rem;
 }
 
 p {
   font-weight: 400;
   font-size: 14px;
+}
+
+.footer p {
+  margin-top: 1rem;
 }
 
 p > button {

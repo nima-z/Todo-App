@@ -1,10 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import NavLinks from "./NavLinks";
 
 import styles from "./MainHeader.module.css";
 
-function MainHeader() {
+function MainHeader(props) {
   return (
     <header className={styles.header}>
       <Link to="/:uid">
@@ -13,7 +13,7 @@ function MainHeader() {
         </div>
       </Link>
       <nav>
-        <NavLinks />
+        <NavLinks uid={props.uid} />
       </nav>
     </header>
   );
