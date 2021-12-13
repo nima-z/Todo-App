@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Flex } from "@chakra-ui/react";
 
 import Buttons from "../../components/UI/Buttons";
 import InputForm from "../../components/Form/InputForm";
+import signup_pic from "../../assets/signup.svg";
 
 import styles from "./SignupForm.module.css";
 
@@ -34,44 +35,46 @@ function SignupForm(props) {
   }
 
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
-      <Flex direction="column" align="flex-start">
-        <InputForm
-          type="text"
-          title="name"
-          label="Name"
-          placeHolder="Enter your name"
-          validators={[]}
-          errorText="Please enter a valid name"
-        />
-        <InputForm
-          type="email"
-          title="email"
-          label="Email"
-          placeHolder="example@something.com"
-          validators={[]}
-          errorText="Please enter a valid email"
-        />
-        <InputForm
-          type="password"
-          title="password"
-          label="Password"
-          placeHolder="+6 character"
-          validators={[]}
-          errorText="Please enter a valid password"
-        />
-      </Flex>
-      <Buttons type="submit">Sign up</Buttons>
-      <div className={styles.footer}>
-        <p>
-          Already have an account?
-          <button type="button" onClick={props.onLogin}>
-            Login
-          </button>
-          .
-        </p>
+    <Fragment>
+      <div className={styles.svg}>
+        <img src={signup_pic} alt="" />
       </div>
-    </form>
+      <form className={styles.form} onSubmit={submitHandler}>
+        <Flex direction="column" align="flex-start">
+          <InputForm
+            type="text"
+            title="Name"
+            placeHolder="Name"
+            validators={[]}
+            errorText="Please enter a valid name"
+          />
+          <InputForm
+            type="email"
+            title="Email"
+            placeHolder="Email"
+            validators={[]}
+            errorText="Please enter a valid email"
+          />
+          <InputForm
+            type="password"
+            title="Password"
+            placeHolder="Password"
+            validators={[]}
+            errorText="Please enter a valid password"
+          />
+        </Flex>
+        <Buttons type="submit">Sign Up &rarr;</Buttons>
+        <div className={styles.footer}>
+          <p>
+            Already have an account?
+            <button type="button" onClick={props.onLogin}>
+              Login
+            </button>
+            .
+          </p>
+        </div>
+      </form>
+    </Fragment>
   );
 }
 

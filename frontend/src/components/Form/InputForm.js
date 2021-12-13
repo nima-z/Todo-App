@@ -29,26 +29,33 @@ function InputForm(props) {
     dispatch({ type: "CHANGE", val: event.target.value });
   }
 
-  if (title === "password") {
+  if (title === "Password") {
     return (
       <div
         className={`${styles.formControl} ${
           !inputState.isValid && styles.invalid
         }`}
       >
-        <label htmlFor={title}>{label}</label>
         <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
             id={title}
-            placeholder="Enter password"
+            placeholder={placeHolder}
             onChange={ChangeInputHandler}
             value={inputState.value}
             pr="4.5rem"
-            isInvalid={!inputState.isValid ? true : false}
+            isInvalid={!inputState.isValid}
+            variant="filled"
           />
           <InputRightElement width="3rem" mr="0.3rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick} fontSize="11px">
+            <Button
+              h="24px"
+              size="sm"
+              onClick={handleClick}
+              fontSize="11px"
+              bg="#CBD5E0"
+              color="white"
+            >
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -63,14 +70,14 @@ function InputForm(props) {
         !inputState.isValid && styles.invalid
       }`}
     >
-      <label htmlFor={title}>{label}</label>
       <Input
         type={type}
         id={title}
         placeholder={placeHolder}
         onChange={ChangeInputHandler}
         value={inputState.value}
-        isInvalid={!inputState.isValid ? true : false}
+        isInvalid={!inputState.isValid}
+        variant="filled"
       />
       {!inputState.isValid && <p>{errorText}</p>}
     </div>

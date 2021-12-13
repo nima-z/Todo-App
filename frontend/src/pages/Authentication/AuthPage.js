@@ -17,7 +17,7 @@ function AuthPage() {
   }
   return (
     <Fragment>
-      <MainHeader />
+      {/* <MainHeader /> */}
       <Container maxW="sm" centerContent padding="0" textAlign="center">
         {!isLogin ? (
           <SignupForm onLogin={changeAuthPage} />

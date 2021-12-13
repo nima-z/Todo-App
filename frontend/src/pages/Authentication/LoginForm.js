@@ -27,10 +27,12 @@ function LoginForm(props) {
         />
       </Flex>
       <Buttons>Login</Buttons>
-      <p>
-        You dont have an account?{" "}
-        <button onClick={props.onSignup}>Sign up</button>.
-      </p>
+      <div className={styles.footer}>
+        <p>
+          You dont have an account?{" "}
+          <button onClick={props.onSignup}>Sign up</button>.
+        </p>
+      </div>
     </form>
   );
 }

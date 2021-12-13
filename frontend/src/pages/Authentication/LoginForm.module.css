@@ -27,11 +27,12 @@ p {
 }
 
 .footer p {
-  margin-top: 1rem;
+  margin-top: 1.7rem;
 }
 
 p > button {
-  color: blue;
+  color: rgba(104, 211, 145, 1);
   font-weight: 700;
   font-size: 16px;
+  margin-left: 4px;
 }
