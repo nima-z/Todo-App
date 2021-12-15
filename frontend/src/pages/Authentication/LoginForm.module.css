@@ -1,24 +1,18 @@
-.form {
+.svg {
+  width: 286.25px;
   margin-top: 4rem;
-  font-weight: 700;
+  margin-bottom: 64px;
 }
 
-.form input {
-  border: 1px solid rgb(144, 140, 140);
-  border-radius: 5px;
-  width: 250px;
-  padding: 0.4rem 0.5rem;
-  font-size: 14px;
-}
-
-.form label {
-  margin-bottom: 0.2rem;
-  margin-top: 0.7rem;
-  font-weight: 700;
+.form {
+  margin: auto;
 }
 
 .form > Button {
-  margin-top: 2rem;
+  margin-top: 1rem;
+  width: 142px;
+  height: 48px;
+  font-size: 18px;
 }
 
 p {

@@ -1,13 +1,11 @@
 import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
+// import styles from "./Buttons.module.css";
+
 function Buttons(props) {
-  if (props.href) {
-    return (
-      <Button href={props.href} colorScheme="blue">
-        {props.children}
-      </Button>
-    );
+  if (props.sort) {
+    return <Button bg="inherit">{props.children}</Button>;
   }
   if (props.to) {
     <Button>

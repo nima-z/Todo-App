@@ -1,20 +1,20 @@
-import { Link } from "react-router-dom";
-
-import NavLinks from "./NavLinks";
+import Buttons from "../UI/Buttons";
+import plusSign from "../../assets/plus-sign.svg";
 
 import styles from "./MainHeader.module.css";
 
 function MainHeader(props) {
   return (
     <header className={styles.header}>
-      <Link to="/:uid">
-        <div className={styles.title}>
-          <h1>Todo App</h1>
-        </div>
-      </Link>
-      <nav>
-        <NavLinks uid={props.uid} />
-      </nav>
+      <div className={styles.title}>
+        <h1>User's List</h1>
+        <p>A goal without a plan is just a wish!</p>
+      </div>
+      <div className={styles.action}>
+        <Buttons to={`/${props.uid}/newtask`}>
+          <img src={plusSign} alt="" />
+        </Buttons>
+      </div>
     </header>
   );
 }

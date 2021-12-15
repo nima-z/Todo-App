@@ -1,21 +1,31 @@
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  Container,
+} from "@chakra-ui/react";
+
 import TodoItem from "./TodoItem";
 import SortForm from "../Form/SortForm";
+import EmptyList from "../../components/Todo/EmptyList";
 
 import styles from "./TodoList.module.css";
 
 function TodoList(props) {
-  if (props.items.length === 0) {
-    return (
-      <div>
-        <h2>No task found.</h2>
-      </div>
-    );
-  }
   return (
-    <div className={styles.container}>
-      <SortForm />
-      <div className={styles.list}>
-        <ul>
+    <Table>
+      <Thead>
+        <SortForm />
+      </Thead>
+      {props.items.length === 0 ? (
+        <EmptyList />
+      ) : (
+        <Tbody className={styles.container}>
           {props.items.map((todo) => (
             <TodoItem
               title={todo.title}
@@ -25,9 +35,9 @@ function TodoList(props) {
               priority={todo.priority}
             />
           ))}
-        </ul>
-      </div>
-    </div>
+        </Tbody>
+      )}
+    </Table>
   );
 }
 

@@ -1,0 +1,27 @@
+.container img {
+  margin: 2.5rem auto;
+}
+
+.description {
+  color: rgba(160, 174, 192, 1);
+}
+
+.description p:first-child {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.action button {
+  background-color: rgba(104, 211, 145, 1);
+  font-size: 20px;
+  min-width: 0;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+  margin-top: 1rem;
+}
+
+.action img {
+  width: 20px;
+}

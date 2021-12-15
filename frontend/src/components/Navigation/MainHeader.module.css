@@ -1,15 +1,36 @@
 .header {
   width: 100%;
-  min-height: 60px;
+  min-height: 128px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  background-color: rgb(27, 29, 27);
-  color: white;
-  padding: 0 1rem;
+  padding: 0.5rem 0;
 }
 
 .title {
-  font-weight: 900;
-  font-size: 18px;
+  text-align: left;
+}
+
+.title h1 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  margin-bottom: 0.5rem;
+}
+
+.title p {
+  color: rgba(160, 174, 192, 1);
+}
+
+.action button {
+  background-color: rgba(104, 211, 145, 1);
+  font-size: 20px;
+  min-width: 0;
+  padding: 0;
+  height: 32px;
+  width: 32px;
+}
+
+.action img {
+  width: 20px;
 }

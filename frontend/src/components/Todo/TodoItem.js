@@ -1,35 +1,68 @@
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider,
+  Container,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Button,
+  Checkbox,
+} from "@chakra-ui/react";
+
+import Buttons from "../UI/Buttons";
 
 import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
+  const stringDate = props.date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
   return (
-    <li className={styles.main}>
-      <div className={styles.topRow}>
-        <div className={styles.checkBox}>
-          <form>
-            <input type="checkbox" />
-          </form>
-          <div className={styles.title}>{props.title}</div>
-        </div>
+    <Tr className={styles.main}>
+      <Td>
+        <form className={styles.checkbox}>
+          <Checkbox colorScheme="green" className={styles.checkbox}></Checkbox>
+        </form>
+      </Td>
+      <Td>
+        <div className={styles.title}>{props.title}</div>
+        <div className={styles.date}>{stringDate}</div>
+      </Td>
+      <Td>
         <div className={styles.priority}>{props.priority}</div>
-      </div>
-      <div className={styles.botRow}>
-        <div className={styles.date}>
-          <span>Created: </span>
-          {props.date}
-        </div>
+      </Td>
+      <Td>
         <div className={styles.action}>
-          <button>
-            <FaRegEdit />
-          </button>
-          <button>
-            <MdDelete />
-          </button>
+          <Menu>
+            {({ isOpen }) => (
+              <>
+                <MenuButton isActive={isOpen} as={Button} bg="inherit">
+                  {isOpen ? "..." : "..."}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Edit...</MenuItem>
+                  <MenuItem>Delete</MenuItem>
+                </MenuList>
+              </>
+            )}
+          </Menu>
         </div>
-      </div>
-    </li>
+      </Td>
+    </Tr>
   );
 }
 

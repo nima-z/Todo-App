@@ -1,3 +1,9 @@
+.svg {
+  width: 286.25px;
+  margin-top: 4rem;
+  margin-bottom: 64px;
+}
+
 .form {
   margin: auto;
 }
@@ -16,10 +22,4 @@ p {
 
 .footer p {
   margin-top: 1.7rem;
-}
-
-.svg {
-  width: 286.25px;
-  margin-top: 4rem;
-  margin-bottom: 64px;
 }
