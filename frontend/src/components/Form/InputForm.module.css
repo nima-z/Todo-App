@@ -6,7 +6,7 @@
 }
 
 .formControl input {
-  width: 320px;
+  max-width: 320px;
   border-radius: 5px;
   padding: 0.4rem 0.5rem;
   font-size: 18px;

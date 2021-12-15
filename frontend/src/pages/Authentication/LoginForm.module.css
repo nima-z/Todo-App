@@ -8,6 +8,10 @@
   margin: auto;
 }
 
+.form input {
+  width: 320px;
+}
+
 .form > Button {
   margin-top: 1rem;
   width: 142px;

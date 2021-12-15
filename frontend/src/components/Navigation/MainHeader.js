@@ -1,6 +1,8 @@
 import Buttons from "../UI/Buttons";
 import plusSign from "../../assets/plus-sign.svg";
 
+import NewTask from "../../pages/Tasks/NewTask";
+
 import styles from "./MainHeader.module.css";
 
 function MainHeader(props) {
@@ -11,9 +13,7 @@ function MainHeader(props) {
         <p>A goal without a plan is just a wish!</p>
       </div>
       <div className={styles.action}>
-        <Buttons to={`/${props.uid}/newtask`}>
-          <img src={plusSign} alt="" />
-        </Buttons>
+        <NewTask />
       </div>
     </header>
   );

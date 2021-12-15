@@ -76,7 +76,7 @@ function InputForm(props) {
         placeholder={placeHolder}
         onChange={ChangeInputHandler}
         value={inputState.value}
-        isInvalid={!inputState.isValid}
+        // isInvalid={props.isInvalid}
         variant="filled"
       />
       {!inputState.isValid && <p>{errorText}</p>}

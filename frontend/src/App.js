@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/:uid/" element={<MainPage />} />
-        <Route path="/:uid/newtask" element={<NewTask />} />
-        <Route path="/:uid/edittask" element={<EditTask />} />
+        {/* <Route path="/:uid/newtask" element={<NewTask />} />
+        <Route path="/:uid/edittask" element={<EditTask />} /> */}
         <Route path="*" element={<AuthPage />} />
       </Routes>
     </Fragment>

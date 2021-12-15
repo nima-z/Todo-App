@@ -3,6 +3,7 @@ import React from "react";
 import emptyList_pic from "../../assets/empty-list.svg";
 import Buttons from "../UI/Buttons";
 import plusSign from "../../assets/plus-sign.svg";
+import NewTask from "../../pages/Tasks/NewTask";
 
 import styles from "./EmptyList.module.css";
 
@@ -17,9 +18,7 @@ function EmptyList(props) {
         <p>Start ading your tasks</p>
       </div>
       <div className={styles.action}>
-        <Buttons to={`/${props.uid}/newtask`}>
-          <img src={plusSign} alt="" />
-        </Buttons>
+        <NewTask />
       </div>
     </div>
   );
