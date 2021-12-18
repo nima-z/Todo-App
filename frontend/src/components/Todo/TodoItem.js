@@ -1,28 +1,15 @@
-import { FaRegEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
-  Container,
-  Table,
-  Thead,
-  Tbody,
   Tr,
-  Th,
   Td,
   Button,
   Checkbox,
 } from "@chakra-ui/react";
 
-import Buttons from "../UI/Buttons";
+import EditTask from "../../pages/Tasks/EditTask";
 
 import styles from "./TodoItem.module.css";
 
@@ -54,8 +41,15 @@ function TodoItem(props) {
                   {isOpen ? "..." : "..."}
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Edit...</MenuItem>
-                  <MenuItem>Delete</MenuItem>
+                  <EditTask />
+                  <MenuItem
+                    _focus="none"
+                    _hover={{
+                      backgroundColor: "rgba(237, 242, 247, 1)",
+                    }}
+                  >
+                    Delete
+                  </MenuItem>
                 </MenuList>
               </>
             )}

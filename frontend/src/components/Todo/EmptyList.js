@@ -1,8 +1,7 @@
 import React from "react";
 
 import emptyList_pic from "../../assets/empty-list.svg";
-import Buttons from "../UI/Buttons";
-import plusSign from "../../assets/plus-sign.svg";
+
 import NewTask from "../../pages/Tasks/NewTask";
 
 import styles from "./EmptyList.module.css";

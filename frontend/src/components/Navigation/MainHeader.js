@@ -1,6 +1,3 @@
-import Buttons from "../UI/Buttons";
-import plusSign from "../../assets/plus-sign.svg";
-
 import NewTask from "../../pages/Tasks/NewTask";
 
 import styles from "./MainHeader.module.css";

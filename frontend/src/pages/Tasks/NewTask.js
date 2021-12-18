@@ -11,8 +11,8 @@ import {
   useDisclosure,
   Button,
   FormControl,
-  FormLabel,
   Input,
+  Select,
 } from "@chakra-ui/react";
 
 import plusSign from "../../assets/plus-sign.svg";
@@ -20,8 +20,8 @@ import plusSign from "../../assets/plus-sign.svg";
 function NewTask() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const initialRef = React.useRef();
-  const finalRef = React.useRef();
+  const initialRef = useRef();
+  const finalRef = useRef();
 
   return (
     <>
@@ -34,25 +34,34 @@ function NewTask() {
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
+        closeOnOverlayClick={false}
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Add a new task</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder="First name" />
+              <Input
+                ref={initialRef}
+                placeholder="Title"
+                variant="filled"
+                _focus="none"
+              />
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder="Last name" />
+              <Select placeholder="Priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </Select>
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button colorScheme="green" mr={3}>
               Save
             </Button>
             <Button onClick={onClose}>Cancel</Button>

@@ -1,14 +1,5 @@
 import React, { useReducer } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-} from "@chakra-ui/react";
+import { Tr, Th } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 
 import Buttons from "../UI/Buttons";

@@ -2,12 +2,27 @@ import { Fragment } from "react";
 import { Flex } from "@chakra-ui/react";
 
 import Buttons from "../../components/UI/Buttons";
-import InputForm from "../../components/Form/InputForm";
+import Input from "../../components/Form/Input";
 import login_pic from "../../assets/login.svg";
+import { useForm } from "../../Hooks/useForm";
+
+import {
+  VALIDATOR_REQUIRE,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
+} from "../../util/validators";
 
 import styles from "./LoginForm.module.css";
 
 function LoginForm(props) {
+  const [formState, inputHandler] = useForm(
+    {
+      Email: { value: "", isValid: false },
+      Password: { value: "", isValid: false },
+    },
+    false
+  );
+
   return (
     <Fragment>
       <div className={styles.svg}>
@@ -15,22 +30,24 @@ function LoginForm(props) {
       </div>
       <form className={styles.form}>
         <Flex direction="column" align="flex-start">
-          <InputForm
+          <Input
             type="email"
-            title="Email"
+            id="Email"
             placeHolder="Email"
-            validators={[]}
+            validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
             errorText="Please enter a valid email"
+            onInput={inputHandler}
           />
-          <InputForm
+          <Input
             type="password"
-            title="Password"
+            id="Password"
             placeHolder="Password"
-            validators={[]}
-            errorText="Please enter a valid password"
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText="Password should be at least 5 characters"
+            onInput={inputHandler}
           />
         </Flex>
-        <Buttons>Login &rarr;</Buttons>
+        <Buttons disabled={!formState.isValid}>Login &rarr;</Buttons>
         <div className={styles.footer}>
           <p>
             Not a member?

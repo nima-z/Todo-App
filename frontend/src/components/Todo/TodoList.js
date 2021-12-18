@@ -1,15 +1,5 @@
 import { Fragment } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  Container,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody } from "@chakra-ui/react";
 
 import TodoItem from "./TodoItem";
 import SortForm from "../Form/SortForm";
