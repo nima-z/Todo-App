@@ -4,7 +4,6 @@ import { Table, Thead, Tbody } from "@chakra-ui/react";
 import TodoItem from "./TodoItem";
 import SortForm from "../Form/SortForm";
 import EmptyList from "../../components/Todo/EmptyList";
-import NewTask from "../../pages/Tasks/NewTask";
 
 import styles from "./TodoList.module.css";
 

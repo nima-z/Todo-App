@@ -54,7 +54,7 @@ function EditTask() {
                 ref={initialRef}
                 placeholder="Title"
                 variant="filled"
-                _focus="none"
+                focus="none"
                 value="title task"
               />
             </FormControl>

@@ -1,10 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Flex } from "@chakra-ui/react";
+import { AuthContext } from "../../util/context/auth-context";
+import { useNavigate } from "react-router-dom";
 
 import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import login_pic from "../../assets/login.svg";
-import { useForm } from "../../Hooks/useForm";
+import { useForm } from "../../util/Hooks/useForm";
 
 import {
   VALIDATOR_REQUIRE,
@@ -15,6 +17,9 @@ import {
 import styles from "./LoginForm.module.css";
 
 function LoginForm(props) {
+  const authCTX = useContext(AuthContext);
+  const Navigate = useNavigate();
+
   const [formState, inputHandler] = useForm(
     {
       Email: { value: "", isValid: false },
@@ -23,12 +28,19 @@ function LoginForm(props) {
     false
   );
 
+  async function submitHandler(event) {
+    event.preventDefault();
+    console.log(formState.inputs);
+    console.log(authCTX.isLoggedin);
+    authCTX.login();
+  }
+
   return (
     <Fragment>
       <div className={styles.svg}>
         <img src={login_pic} alt="" />
       </div>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={submitHandler}>
         <Flex direction="column" align="flex-start">
           <Input
             type="email"
@@ -47,7 +59,9 @@ function LoginForm(props) {
             onInput={inputHandler}
           />
         </Flex>
-        <Buttons disabled={!formState.isValid}>Login &rarr;</Buttons>
+        <Buttons disabled={!formState.isValid} type="Submit">
+          Login &rarr;
+        </Buttons>
         <div className={styles.footer}>
           <p>
             Not a member?

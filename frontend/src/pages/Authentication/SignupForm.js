@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react";
 import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import signup_pic from "../../assets/signup.svg";
-import { useForm } from "../../Hooks/useForm";
+import { useForm } from "../../util/Hooks/useForm";
 
 import {
   VALIDATOR_REQUIRE,
@@ -26,6 +26,7 @@ function SignupForm(props) {
 
   async function submitHandler(event) {
     event.preventDefault();
+    console.log(formState.inputs);
 
     // try {
     //   const response = await fetch("http://localhost:5000/api/users/signup", {
