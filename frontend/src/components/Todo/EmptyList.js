@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  Tbody,
-  Tr,
-  Td,
-  Button,
-  Checkbox,
-} from "@chakra-ui/react";
+import { Tbody, Tr, Td } from "@chakra-ui/react";
 
 import emptyList_pic from "../../assets/empty-list.svg";
 

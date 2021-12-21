@@ -9,4 +9,6 @@ router.post("/", taskControllers.createNewTask); //create a task of specific use
 
 router.delete("/:tid", taskControllers.deleteTask);
 
+router.patch("/:tid", taskControllers.editTask);
+
 module.exports = router;

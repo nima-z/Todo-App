@@ -22,15 +22,6 @@
   color: rgba(160, 174, 192, 1);
 }
 
-.action button {
-  background-color: rgba(104, 211, 145, 1);
-  font-size: 20px;
-  min-width: 0;
-  padding: 0;
-  height: 32px;
-  width: 32px;
-}
-
 .action img {
   width: 20px;
 }

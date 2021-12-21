@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 async function getAllTasks(req, res, next) {
   const { uid } = req.params;
+
   let userWithTasks;
   try {
     userWithTasks = await User.findById(uid).populate("tasks");
@@ -12,7 +13,7 @@ async function getAllTasks(req, res, next) {
     return next(new HttpError("Could not find tasks for this user id", 500));
   }
 
-  if (!userWithTasks || userWithTasks.tasks.length === 0) {
+  if (!userWithTasks) {
     return next(new HttpError("Could not find tasks for this user id", 500));
   }
   res.json({ tasks: userWithTasks.tasks });
@@ -20,13 +21,13 @@ async function getAllTasks(req, res, next) {
 
 async function createNewTask(req, res, next) {
   const { title, priority, creatorId } = req.body;
+
   const date = new Date();
   const createdTask = new Task({
     title,
     priority,
     status: "UnDone",
     createDate: date.toLocaleDateString(),
-    updatedAt: date.toLocaleDateString(),
     creatorId,
   });
 
@@ -62,12 +63,15 @@ async function deleteTask(req, res, next) {
     task = await Task.findById(tid).populate("creatorId");
   } catch (err) {
     return next(
-      new HttpError("something went wrong, could not delete task", 500)
+      new HttpError(
+        "something went wrong, could not findById from Database",
+        500
+      )
     );
   }
 
   if (!task) {
-    return next(new HttpError("Could not find task for this id", 404));
+    return next(new HttpError("Could not find any task for this id", 404));
   }
 
   try {
@@ -79,12 +83,48 @@ async function deleteTask(req, res, next) {
     await sess.commitTransaction();
   } catch (err) {
     return next(
-      new HttpError("Something went wrong, could not delete task", 500)
+      new HttpError("Something went wrong, could not delete this task", 500)
     );
   }
   res.status(200).json({ message: "task deleted" });
 }
 
+async function editTask(req, res, next) {
+  const { tid } = req.params;
+  const { title, priority } = req.body;
+
+  console.log(req.params);
+
+  let task;
+  try {
+    task = await Task.findById(tid);
+  } catch (err) {
+    return next(
+      new HttpError("Something went wrong, could not findById from Database")
+    );
+  }
+
+  if (!task) {
+    return next(new HttpError("Could not find any task for this id", 404));
+  }
+
+  try {
+    task.title = title;
+    task.priority = priority;
+    try {
+      await task.save();
+    } catch (err) {
+      next(new HttpError("could not save the changes"));
+    }
+  } catch (err) {
+    return next(
+      new HttpError("Something went wrong, could not edit this task", 500)
+    );
+  }
+  res.status(200).json({ message: "task edited" });
+}
+
 exports.getAllTasks = getAllTasks;
 exports.createNewTask = createNewTask;
 exports.deleteTask = deleteTask;
+exports.editTask = editTask;

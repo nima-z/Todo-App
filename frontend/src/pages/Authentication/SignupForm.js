@@ -1,11 +1,13 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Flex } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import signup_pic from "../../assets/signup.svg";
 import { useForm } from "../../util/Hooks/useForm";
-
+import { useFetch } from "../../util/Hooks/fetch-hook";
+import { AuthContext } from "../../util/context/auth-context";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
@@ -15,6 +17,8 @@ import {
 import styles from "./SignupForm.module.css";
 
 function SignupForm(props) {
+  const navigate = useNavigate();
+  const authCTX = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
       Name: { value: "", isValid: false },
@@ -23,26 +27,30 @@ function SignupForm(props) {
     },
     false
   );
+  const { isLoading, error, clearError, sendRequest } = useFetch();
 
   async function submitHandler(event) {
     event.preventDefault();
-    console.log(formState.inputs);
 
-    // try {
-    //   const response = await fetch("http://localhost:5000/api/users/signup", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       name: formData.name,
-    //       email: formData.email,
-    //       password: formData.password,
-    //     }),
-    //   });
-    //   const responseData = await response.json();
-    //   console.log(responseData);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/api/users/signup",
+        "POST",
+        JSON.stringify({
+          name: formState.inputs.Name.value,
+          email: formState.inputs.Email.value,
+          password: formState.inputs.Password.value,
+        })
+      );
+
+      authCTX.setId(responseData.user._id.toString());
+      authCTX.setName(responseData.user.name);
+      authCTX.setTasks(0);
+      authCTX.login();
+      navigate(`/${authCTX.userState.userId}`);
+    } catch (err) {
+      console.log("error in submitting");
+    }
   }
 
   return (

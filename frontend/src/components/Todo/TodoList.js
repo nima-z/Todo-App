@@ -21,8 +21,8 @@ function TodoList(props) {
             {props.items.map((todo) => (
               <TodoItem
                 title={todo.title}
-                id={todo.id}
-                key={todo.id}
+                id={todo._id}
+                key={todo._id}
                 date={todo.createDate}
                 priority={todo.priority}
               />

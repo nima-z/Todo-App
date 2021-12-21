@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import AuthPage from "./pages/Authentication/AuthPage";
 import MainPage from "./pages/Tasks/MainPage";
-import { AuthProvider, AuthContext } from "./util/context/auth-context";
+import { AuthContext } from "./util/context/auth-context";
 
 import "./App.css";
 
@@ -11,8 +11,8 @@ function App() {
   const authCTX = useContext(AuthContext);
 
   let routes;
-  console.log(authCTX.isLoggedin);
-  if (authCTX.isLoggedin) {
+
+  if (authCTX.userState.isLoggedin) {
     routes = (
       <Routes>
         <Route path="/:uid/" element={<MainPage />} />
@@ -27,7 +27,7 @@ function App() {
       </Routes>
     );
   }
-  return <AuthProvider>{routes}</AuthProvider>;
+  return routes;
 }
 
 export default App;

@@ -7,12 +7,16 @@ import { ChakraProvider } from "@chakra-ui/react";
 import "./index.css";
 
 import App from "./App";
+import { AuthProvider } from "./util/context/auth-context";
 
 ReactDOM.render(
   <ChakraProvider>
     <Router>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </Router>
   </ChakraProvider>,
+
   document.getElementById("root")
 );

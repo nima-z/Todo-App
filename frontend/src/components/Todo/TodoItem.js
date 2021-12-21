@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import {
   Menu,
   MenuButton,
@@ -10,14 +12,40 @@ import {
 } from "@chakra-ui/react";
 
 import EditTask from "../../pages/Tasks/EditTask";
+import { AuthContext } from "../../util/context/auth-context";
 
 import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
+  const authCTX = useContext(AuthContext);
   const stringDate = props.date.toLocaleString("en-US", {
     month: "short",
     day: "numeric",
   });
+
+  function deleteHandler() {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/tasks/${props.id}`,
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        authCTX.setTasks(-1);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sendRequest();
+  }
+
   return (
     <Tr className={styles.main}>
       <Td>
@@ -41,12 +69,17 @@ function TodoItem(props) {
                   {isOpen ? "..." : "..."}
                 </MenuButton>
                 <MenuList>
-                  <EditTask />
+                  <EditTask
+                    taskId={props.id}
+                    title={props.title}
+                    priority={props.priority}
+                  />
                   <MenuItem
-                    _focus="none"
-                    _hover={{
+                    focus="none"
+                    hover={{
                       backgroundColor: "rgba(237, 242, 247, 1)",
                     }}
+                    onClick={deleteHandler}
                   >
                     Delete
                   </MenuItem>

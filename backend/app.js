@@ -10,10 +10,20 @@ const mongoAuth = require("./util/mongoKey");
 
 const app = express();
 
-app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cors());
+app.use(bodyParser.json());
+
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, Patch");
+//   next();
+// });
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/users", usersRoutes);
 app.use("/api/tasks", tasksRoutes);

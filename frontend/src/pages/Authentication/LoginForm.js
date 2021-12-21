@@ -7,6 +7,7 @@ import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import login_pic from "../../assets/login.svg";
 import { useForm } from "../../util/Hooks/useForm";
+import { useFetch } from "../../util/Hooks/fetch-hook";
 
 import {
   VALIDATOR_REQUIRE,
@@ -18,7 +19,7 @@ import styles from "./LoginForm.module.css";
 
 function LoginForm(props) {
   const authCTX = useContext(AuthContext);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [formState, inputHandler] = useForm(
     {
@@ -27,12 +28,28 @@ function LoginForm(props) {
     },
     false
   );
+  const { isLoading, error, clearError, sendRequest } = useFetch();
 
   async function submitHandler(event) {
     event.preventDefault();
-    console.log(formState.inputs);
-    console.log(authCTX.isLoggedin);
-    authCTX.login();
+
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/api/users/login",
+        "POST",
+        JSON.stringify({
+          email: formState.inputs.Email.value,
+          password: formState.inputs.Password.value,
+        })
+      );
+
+      authCTX.login();
+      authCTX.setId(responseData.user._id.toString());
+      authCTX.setName(responseData.user.name);
+      navigate(`/${authCTX.userState.userId}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
