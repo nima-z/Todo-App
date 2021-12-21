@@ -44,7 +44,7 @@ function NewTask() {
 
     try {
       const response = await sendRequest(
-        "http://localhost:5000/api/tasks",
+        process.env.REACT_APP_BACKEND_URL + "/tasks",
         "POST",
         JSON.stringify({
           title,
@@ -58,6 +58,7 @@ function NewTask() {
       // localStorage.setItem("auth", JSON.stringify(authCTX.userState));
 
       onClose();
+      setTitle("");
     } catch (err) {
       console.log(err);
     }

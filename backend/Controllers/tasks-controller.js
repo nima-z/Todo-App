@@ -27,7 +27,7 @@ async function createNewTask(req, res, next) {
     title,
     priority,
     status: "UnDone",
-    createDate: date.toLocaleDateString(),
+    createDate: date,
     creatorId,
   });
 

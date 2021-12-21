@@ -6,24 +6,11 @@ const cors = require("cors");
 const usersRoutes = require("./Routes/users-routes");
 const tasksRoutes = require("./Routes/tasks-routes");
 const HttpError = require("./Models/http-error");
-const mongoAuth = require("./util/mongoKey");
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//   );
-
-//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, Patch");
-//   next();
-// });
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/users", usersRoutes);
 app.use("/api/tasks", tasksRoutes);
@@ -40,7 +27,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${mongoAuth.username}:${mongoAuth.password}@cluster0.y9aro.mongodb.net/todoApp?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.DB_user}:${process.env.DB_password}@cluster0.y9aro.mongodb.net/${process.env.DB_name}?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(5000, (req, res) => {

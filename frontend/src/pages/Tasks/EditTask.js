@@ -45,7 +45,7 @@ function EditTask(props) {
     const editTask = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/tasks/${props.taskId}`,
+          process.env.REACT_APP_BACKEND_URL + `/tasks/${props.taskId}`,
           "PATCH",
           JSON.stringify({
             title,

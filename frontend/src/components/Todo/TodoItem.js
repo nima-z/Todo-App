@@ -18,7 +18,8 @@ import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
   const authCTX = useContext(AuthContext);
-  const stringDate = props.date.toLocaleString("en-US", {
+  console.log(typeof props.date);
+  const stringDate = new Date(props.date).toLocaleString("en-US", {
     month: "short",
     day: "numeric",
   });
@@ -27,7 +28,7 @@ function TodoItem(props) {
     const sendRequest = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/tasks/${props.id}`,
+          process.env.REACT_APP_BACKEND_URL + `/tasks/${props.id}`,
           {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
