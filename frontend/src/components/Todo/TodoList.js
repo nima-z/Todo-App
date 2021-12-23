@@ -1,24 +1,32 @@
-import { Fragment } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Table, Thead, Tbody } from "@chakra-ui/react";
 
 import TodoItem from "./TodoItem";
 import SortForm from "../Form/SortForm";
 import EmptyList from "../../components/Todo/EmptyList";
+import { AuthContext } from "../../util/context/auth-context";
 
 import styles from "./TodoList.module.css";
 
 function TodoList(props) {
+  const [toggle, setToggle] = useState(false);
+  const authCTX = useContext(AuthContext);
+
+  function listSorter() {
+    setToggle(!toggle);
+  }
+
   return (
     <Fragment>
       <Table>
         <Thead>
-          <SortForm />
+          <SortForm listSorter={listSorter} />
         </Thead>
-        {props.items.length === 0 ? (
+        {authCTX.userState.list.length === 0 ? (
           <EmptyList />
         ) : (
           <Tbody className={styles.container}>
-            {props.items.map((todo) => (
+            {authCTX.userState.list.map((todo) => (
               <TodoItem
                 title={todo.title}
                 id={todo._id}

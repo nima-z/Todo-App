@@ -22,8 +22,23 @@
 }
 
 .priority {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  border-radius: 2px;
+  padding: 0 4px;
+  background-color: rgb(75, 89, 218);
+  text-align: center;
+}
+
+.high {
+  background-color: rgba(43, 108, 176, 1);
+}
+.medium {
+  background-color: rgba(66, 153, 225, 1);
+}
+.low {
+  background-color: rgba(144, 205, 244, 1);
 }
 
 .checkbox {

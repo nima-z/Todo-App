@@ -18,7 +18,6 @@ import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
   const authCTX = useContext(AuthContext);
-  console.log(typeof props.date);
   const stringDate = new Date(props.date).toLocaleString("en-US", {
     month: "short",
     day: "numeric",
@@ -47,6 +46,17 @@ function TodoItem(props) {
     sendRequest();
   }
 
+  let proClass;
+  if (props.priority === "High") {
+    proClass = "high";
+  }
+  if (props.priority === "Medium") {
+    proClass = "medium";
+  }
+  if (props.priority === "Low") {
+    proClass = "low";
+  }
+
   return (
     <Tr className={styles.main}>
       <Td>
@@ -59,7 +69,9 @@ function TodoItem(props) {
         <div className={styles.date}>{stringDate}</div>
       </Td>
       <Td>
-        <div className={styles.priority}>{props.priority}</div>
+        <div className={`${styles.priority}  ${styles[proClass]}`}>
+          {props.priority}
+        </div>
       </Td>
       <Td>
         <div className={styles.action}>

@@ -1,59 +1,99 @@
-// import React, { useReducer } from "react";
-import { Tr, Th } from "@chakra-ui/react";
+import React, { useReducer, useContext } from "react";
+import { Tr, Th, Button } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-
-import Buttons from "../UI/Buttons";
+import { AuthContext } from "../../util/context/auth-context";
 
 import styles from "./SortForm.module.css";
 
-// function sortReducer(state, action) {
-//   switch (action.type) {
-//     case "task":
-//       if (state.type === "task") {
-//         return { ...state, sort: !state.sort };
-//       }
-//       return { ...state, type: "task", sort: dummy_data.sort() };
-//     case "priority":
-//       if (state.type === "priority") {
-//         return { ...state, sort: !state.sort };
-//       }
-//       return { ...state, type: "task", sort: dummy_data.sort() };
-//     case "date":
-//       if (state.type === "date") {
-//         return { ...state, sort: !state.sort };
-//       }
-//       return { ...state, type: "task", sort: dummy_data.sort() };
-//     default:
-//       return state;
-//   }
-// }
+function SortForm(props) {
+  const authCTX = useContext(AuthContext);
+  const [sortState, dispatch] = useReducer(sortReducer, {
+    type: "task",
+    sortedList: authCTX.userState.list,
+    ascending: true,
+  });
 
-// const prioritysort = {
-//   high: 3,
-//   medium: 2,
-//   low: 1,
-// };
+  function sortReducer(state, action) {
+    switch (action.type) {
+      case "TASK":
+        if (state.type === "task") {
+          return {
+            ...state,
+            sortedList: authCTX.userState.list.reverse(),
+            ascending: !state.ascending,
+          };
+        }
+        return {
+          ...state,
+          type: "task",
+          sortedList: authCTX.userState.list.sort(
+            (a, b) => new Date(b.createDate) - new Date(a.createDate)
+          ),
+          ascending: !state.ascending,
+        };
+      case "PRIORITY":
+        const order = ["High", "Medium", "Low"];
 
-function SortForm() {
-  //   function sortTaskHandler(event) {
-  //     setSortTask(true);
-  //   }
+        if (state.type === "priority") {
+          return {
+            ...state,
+            sortedList: state.sortedList.reverse(),
+            ascending: !state.ascending,
+          };
+        }
+
+        return {
+          ...state,
+          type: "priority",
+          sortedList: authCTX.userState.list.sort(
+            (a, b) => order.indexOf(a.priority) - order.indexOf(b.priority)
+          ),
+          ascending: !state.ascending,
+        };
+      default:
+        return state;
+    }
+  }
+
+  function sortTaskHandler() {
+    dispatch({ type: "TASK" });
+    props.listSorter();
+  }
+  function sortPriorityHandler() {
+    dispatch({ type: "PRIORITY" });
+    props.listSorter();
+  }
+
   return (
     <Tr className={styles.sort}>
       <Th></Th>
       <Th>
-        <Buttons sort="true">
+        <Button onClick={sortTaskHandler}>
           Task
-          <ChevronDownIcon />
-          <ChevronUpIcon />
-        </Buttons>
+          {sortState.type === "task" ? (
+            sortState.ascending ? (
+              <ChevronDownIcon />
+            ) : (
+              <ChevronUpIcon />
+            )
+          ) : (
+            ""
+          )}
+        </Button>
       </Th>
       <Th>
-        <Buttons sort="true">
+        <Button onClick={sortPriorityHandler}>
           Priority
-          <ChevronDownIcon />
-          <ChevronUpIcon />
-        </Buttons>
+          {sortState.type === "priority" ? (
+            sortState.ascending ? (
+              <ChevronDownIcon />
+            ) : (
+              <ChevronUpIcon />
+            )
+          ) : (
+            ""
+          )}
+        </Button>
       </Th>
       <Th></Th>
     </Tr>
