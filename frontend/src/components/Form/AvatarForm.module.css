@@ -1,0 +1,16 @@
+.checkBox input {
+  width: 0;
+}
+
+.checkBox label {
+  display: inline-block;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 3rem;
+  cursor: pointer;
+  margin: 8px;
+}
+
+.checkBox input:checked + label {
+  border-color: #4c4;
+}

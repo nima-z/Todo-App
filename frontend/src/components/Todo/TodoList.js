@@ -8,7 +8,7 @@ import { AuthContext } from "../../util/context/auth-context";
 
 import styles from "./TodoList.module.css";
 
-function TodoList(props) {
+function TodoList() {
   const [toggle, setToggle] = useState(false);
   const authCTX = useContext(AuthContext);
 
@@ -18,8 +18,8 @@ function TodoList(props) {
 
   return (
     <Fragment>
-      <Table>
-        <Thead>
+      <Table size="lg" maxWidth="375px">
+        <Thead maxWidth="375px">
           <SortForm listSorter={listSorter} />
         </Thead>
         {authCTX.userState.list.length === 0 ? (

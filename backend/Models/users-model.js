@@ -8,6 +8,7 @@ const userSchema = new Schema({
   password: { type: String, require: true, minlength: 6 },
   createDate: { type: String, required: true },
   tasks: [{ type: mongoose.Types.ObjectId, required: true, ref: "Task" }],
+  avatar: { type: String },
 });
 
 module.exports = mongoose.model("User", userSchema);

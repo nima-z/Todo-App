@@ -47,6 +47,7 @@ function LoginForm(props) {
       authCTX.setId(responseData.user._id.toString());
       authCTX.setName(responseData.user.name);
       authCTX.setTasks(responseData.user.tasks.length);
+      authCTX.setAvatar(responseData.user.avatar);
       navigate(`/${authCTX.userState.userId}`);
     } catch (err) {
       console.log(err);

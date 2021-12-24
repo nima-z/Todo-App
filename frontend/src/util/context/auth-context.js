@@ -6,11 +6,13 @@ export const AuthContext = createContext({
   userName: null,
   tasks: 0,
   list: [],
+  avatar: "",
   login: () => {},
   logout: () => {},
   setId: () => {},
   setTasks: () => {},
   setList: () => {},
+  setAvatar: () => {},
 });
 
 function initializer() {
@@ -39,7 +41,13 @@ const userReducer = (state, action) => {
     case "TASK":
       return { ...state, tasks: state.tasks + action.val };
     case "LIST":
-      return { ...state, list: action.val };
+      if (action.val.length > 0 || action.val.length === 0) {
+        return { ...state, list: action.val };
+      } else {
+        return { ...state, list: [...state.list, action.val] };
+      }
+    case "AVATAR":
+      return { ...state, avatar: action.val };
     default:
       return state;
   }
@@ -52,6 +60,7 @@ export function AuthProvider(props) {
     isLoggedin: initializer().isLoggedin,
     tasks: initializer().tasks,
     list: [],
+    avatar: "",
   });
   const loginHandler = useCallback(() => {
     dispatch({ type: "LOGIN" });
@@ -74,6 +83,9 @@ export function AuthProvider(props) {
   const updateListHandler = useCallback((x) => {
     dispatch({ type: "LIST", val: x });
   }, []);
+  const updateAvatar = (x) => {
+    dispatch({ type: "AVATAR", val: x });
+  };
 
   const { isLoggedin } = userState;
 
@@ -91,6 +103,7 @@ export function AuthProvider(props) {
         setName: userNameHandler,
         setTasks: updateTasksHandler,
         setList: updateListHandler,
+        setAvatar: updateAvatar,
         userState,
       }}
     >

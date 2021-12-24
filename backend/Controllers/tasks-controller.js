@@ -16,7 +16,7 @@ async function getAllTasks(req, res, next) {
   if (!userWithTasks) {
     return next(new HttpError("Could not find tasks for this user id", 500));
   }
-  res.json({ tasks: userWithTasks.tasks });
+  res.json({ tasks: userWithTasks.tasks, user: userWithTasks });
 }
 
 async function createNewTask(req, res, next) {

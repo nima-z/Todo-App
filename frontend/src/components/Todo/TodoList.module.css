@@ -1,6 +1,7 @@
 .container {
   display: block;
   width: 100%;
+  max-width: 375px;
   height: 550px;
   overflow-y: scroll;
 }

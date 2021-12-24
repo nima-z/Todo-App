@@ -1,27 +1,36 @@
 .header {
-  width: 100%;
   min-height: 128px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
+  min-width: 375px;
 }
 
 .title {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 17px;
 }
 
 .title h1 {
   font-size: 20px;
   font-weight: 700;
   line-height: 24px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 6px;
 }
 
 .title p {
   color: rgba(160, 174, 192, 1);
 }
 
-.action img {
-  width: 20px;
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 24px 0 24px;
+}
+.action Button {
+  font-weight: 400;
+}
+.newTask img {
+  width: 25px;
 }

@@ -4,7 +4,7 @@ const User = require("../Models/users-model");
 // create new user
 async function createNewUser(req, res, next) {
   const { name, email, password } = req.body;
-  console.log(req.body);
+
   // let hasUser;
   // try {
   //   hasUser = await User.findOne({ email: email });
@@ -39,7 +39,6 @@ async function createNewUser(req, res, next) {
 // Login logic
 async function login(req, res, next) {
   const { email, password } = req.body;
-  console.log(req.body);
 
   let identifiedUser;
 
@@ -58,5 +57,38 @@ async function login(req, res, next) {
   res.json({ user: identifiedUser });
 }
 
+async function addAvatar(req, res, next) {
+  const { uid } = req.params;
+  const { avatar } = req.body;
+  console.log(req.body);
+
+  let user;
+
+  try {
+    user = await User.findOne({ _id: uid });
+    console.log(user);
+  } catch (err) {
+    return next(
+      new HttpError("Finding user failed, please try again later", 500)
+    );
+  }
+
+  if (!user) {
+    return next(new HttpError("No user found with this user id", 401));
+  }
+
+  try {
+    user.avatar = avatar;
+  } catch (err) {
+    return next(
+      new HttpError("Could not set an avatar, please try again", 500)
+    );
+  }
+  await user.save();
+
+  res.json({ avatar });
+}
+
 exports.createNewUser = createNewUser;
 exports.login = login;
+exports.addAvatar = addAvatar;

@@ -24,14 +24,14 @@ function MainPage(props) {
         );
 
         authCTX.setList(responseData.tasks);
+        authCTX.setAvatar(responseData.user.avatar);
         setLoadedData(authCTX.userState.list);
-        console.log(authCTX.userState.list);
       } catch (err) {
         console.log(err);
       }
     };
     fetchTasks();
-  }, []);
+  }, [authCTX.userState.tasks, authCTX.userState.avatar]);
 
   return (
     <Container maxW="md" centerContent padding="0" textAlign="center">

@@ -9,7 +9,6 @@ function SortForm(props) {
   const authCTX = useContext(AuthContext);
   const [sortState, dispatch] = useReducer(sortReducer, {
     type: "task",
-    sortedList: authCTX.userState.list,
     ascending: true,
   });
 
@@ -17,39 +16,40 @@ function SortForm(props) {
     switch (action.type) {
       case "TASK":
         if (state.type === "task") {
+          authCTX.userState.list.reverse();
           return {
             ...state,
-            sortedList: authCTX.userState.list.reverse(),
             ascending: !state.ascending,
           };
-        }
-        return {
-          ...state,
-          type: "task",
-          sortedList: authCTX.userState.list.sort(
+        } else {
+          authCTX.userState.list.sort(
             (a, b) => new Date(b.createDate) - new Date(a.createDate)
-          ),
-          ascending: !state.ascending,
-        };
-      case "PRIORITY":
-        const order = ["High", "Medium", "Low"];
-
-        if (state.type === "priority") {
+          );
           return {
             ...state,
-            sortedList: state.sortedList.reverse(),
+            type: "task",
+            ascending: !state.ascending,
+          };
+        }
+      case "PRIORITY":
+        if (state.type === "priority") {
+          authCTX.userState.list.reverse();
+          return {
+            ...state,
+            ascending: !state.ascending,
+          };
+        } else {
+          const order = ["High", "Medium", "Low"];
+          authCTX.userState.list.sort(
+            (a, b) => order.indexOf(a.priority) - order.indexOf(b.priority)
+          );
+          return {
+            ...state,
+            type: "priority",
             ascending: !state.ascending,
           };
         }
 
-        return {
-          ...state,
-          type: "priority",
-          sortedList: authCTX.userState.list.sort(
-            (a, b) => order.indexOf(a.priority) - order.indexOf(b.priority)
-          ),
-          ascending: !state.ascending,
-        };
       default:
         return state;
     }
@@ -65,10 +65,14 @@ function SortForm(props) {
   }
 
   return (
-    <Tr className={styles.sort}>
-      <Th></Th>
-      <Th>
-        <Button onClick={sortTaskHandler}>
+    <Tr className={styles.sort} maxWidth="375px">
+      <Th minWidth="120px">
+        <Button
+          onClick={sortTaskHandler}
+          padding="0.2rem"
+          _hover={{ bg: "none" }}
+          _focus={{ boxShadow: "none" }}
+        >
           Task
           {sortState.type === "task" ? (
             sortState.ascending ? (
@@ -81,8 +85,13 @@ function SortForm(props) {
           )}
         </Button>
       </Th>
-      <Th>
-        <Button onClick={sortPriorityHandler}>
+      <Th minWidth="110px" paddingLeft="50px" textAlign="center">
+        <Button
+          onClick={sortPriorityHandler}
+          padding="0.2rem"
+          _hover={{ bg: "none" }}
+          _focus={{ boxShadow: "none" }}
+        >
           Priority
           {sortState.type === "priority" ? (
             sortState.ascending ? (
@@ -95,7 +104,6 @@ function SortForm(props) {
           )}
         </Button>
       </Th>
-      <Th></Th>
     </Tr>
   );
 }

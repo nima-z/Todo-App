@@ -53,7 +53,8 @@ function NewTask() {
         })
       );
       authCTX.setTasks(1);
-      authCTX.setList((prev) => [...prev, response.task]);
+      authCTX.setList(response.task);
+      console.log(response.task);
       console.log(authCTX.userState.list);
 
       // localStorage.clear();

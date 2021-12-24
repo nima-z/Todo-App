@@ -58,27 +58,38 @@ function TodoItem(props) {
   }
 
   return (
-    <Tr className={styles.main}>
-      <Td>
+    <Tr className={styles.main} maxWidth="375px">
+      <Td padding="8px">
         <form className={styles.checkbox}>
-          <Checkbox colorScheme="green" className={styles.checkbox}></Checkbox>
+          <Checkbox
+            colorScheme="green"
+            className={styles.checkbox}
+            size="lg"
+          ></Checkbox>
         </form>
       </Td>
-      <Td>
+      <Td padding="16px" minWidth="150px" paddingLeft="22px">
         <div className={styles.title}>{props.title}</div>
         <div className={styles.date}>{stringDate}</div>
       </Td>
-      <Td>
+      <Td padding="13px">
         <div className={`${styles.priority}  ${styles[proClass]}`}>
           {props.priority}
         </div>
       </Td>
-      <Td>
+      <Td padding="20px">
         <div className={styles.action}>
           <Menu>
             {({ isOpen }) => (
               <>
-                <MenuButton isActive={isOpen} as={Button} bg="inherit">
+                <MenuButton
+                  isActive={isOpen}
+                  as={Button}
+                  bg="inherit"
+                  _hover={{ bg: "none" }}
+                  _focus={{ boxShadow: "none" }}
+                  fontSize="20px"
+                >
                   {isOpen ? "..." : "..."}
                 </MenuButton>
                 <MenuList>
@@ -87,15 +98,18 @@ function TodoItem(props) {
                     title={props.title}
                     priority={props.priority}
                   />
-                  <MenuItem
+                  <Button
                     focus="none"
-                    hover={{
-                      backgroundColor: "rgba(237, 242, 247, 1)",
-                    }}
+                    width="100%"
+                    justifyContent="flex-start"
+                    _active={{ bg: "none" }}
+                    _focus={{ boxShadow: "none" }}
+                    bg="inherit"
+                    borderRadius="0"
                     onClick={deleteHandler}
                   >
                     Delete
-                  </MenuItem>
+                  </Button>
                 </MenuList>
               </>
             )}
