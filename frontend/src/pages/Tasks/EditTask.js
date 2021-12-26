@@ -22,7 +22,7 @@ function EditTask(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState();
-  const { sendRequest } = useFetch();
+  const { isLoading, sendRequest } = useFetch();
   const authCTX = useContext(AuthContext);
 
   const initialRef = useRef();
@@ -42,22 +42,21 @@ function EditTask(props) {
 
   async function onSubmitHandler(event) {
     event.preventDefault();
-    const editTask = async () => {
-      try {
-        const responseData = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL + `/tasks/${props.taskId}`,
-          "PATCH",
-          JSON.stringify({
-            title,
-            priority,
-          })
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    editTask();
-    authCTX.setTasks(0);
+
+    try {
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/tasks/${props.taskId}`,
+        "PATCH",
+        JSON.stringify({
+          title,
+          priority,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+
+    authCTX.setTasks(0.0001);
     onClose();
   }
 
@@ -85,7 +84,7 @@ function EditTask(props) {
         // isCentered
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxWidth="350px">
           <form onSubmit={onSubmitHandler}>
             <ModalHeader>Edit item</ModalHeader>
             <ModalCloseButton />
@@ -114,7 +113,13 @@ function EditTask(props) {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="green" mr={3} type="submit">
+              <Button
+                colorScheme="green"
+                mr={3}
+                type="submit"
+                isLoading={isLoading}
+                loadingText="Saving"
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>

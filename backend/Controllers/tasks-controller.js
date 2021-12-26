@@ -2,6 +2,7 @@ const HttpError = require("../Models/http-error");
 const Task = require("../Models/tasks-model");
 const User = require("../Models/users-model");
 const mongoose = require("mongoose");
+const { validationResult } = require("express-validator");
 
 async function getAllTasks(req, res, next) {
   const { uid } = req.params;
@@ -20,6 +21,12 @@ async function getAllTasks(req, res, next) {
 }
 
 async function createNewTask(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your inputs.", 422)
+    );
+  }
   const { title, priority, creatorId } = req.body;
 
   const date = new Date();
@@ -90,6 +97,12 @@ async function deleteTask(req, res, next) {
 }
 
 async function editTask(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your inputs.", 422)
+    );
+  }
   const { tid } = req.params;
   const { title, priority } = req.body;
 
@@ -124,7 +137,41 @@ async function editTask(req, res, next) {
   res.status(200).json({ message: "task edited" });
 }
 
+async function doneTask(req, res, next) {
+  const { tid } = req.params;
+
+  console.log(req.params);
+
+  let task;
+  try {
+    task = await Task.findById(tid);
+  } catch (err) {
+    return next(
+      new HttpError("Something went wrong, could not findById from Database")
+    );
+  }
+
+  if (!task) {
+    return next(new HttpError("Could not find any task for this id", 404));
+  }
+
+  try {
+    task.status = "Done";
+    try {
+      await task.save();
+    } catch (err) {
+      next(new HttpError("could not save the changes"));
+    }
+  } catch (err) {
+    return next(
+      new HttpError("Something went wrong, could not edit this task", 500)
+    );
+  }
+  res.status(200).json({ message: "task edited" });
+}
+
 exports.getAllTasks = getAllTasks;
 exports.createNewTask = createNewTask;
 exports.deleteTask = deleteTask;
 exports.editTask = editTask;
+exports.doneTask = doneTask;

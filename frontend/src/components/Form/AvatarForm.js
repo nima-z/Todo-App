@@ -36,7 +36,7 @@ import image8 from "../../assets/avatars/Avatar-8.svg";
 function AvatarForm() {
   const [avatarInput, setAvatarInput] = useState("avatar-1");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { sendRequest } = useFetch();
+  const { isLoading, sendRequest } = useFetch();
   const authCTX = useContext(AuthContext);
 
   const initialRef = useRef();
@@ -44,29 +44,25 @@ function AvatarForm() {
 
   function avatarHandler(event) {
     setAvatarInput(event.target.value);
-    console.log(event.target.value);
   }
 
   async function onSubmitHandler(event) {
     event.preventDefault();
-    const sendAvatar = async () => {
-      try {
-        const responseData = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL +
-            `/users/${authCTX.userState.userId}`,
-          "PATCH",
-          JSON.stringify({
-            avatar: avatarInput,
-          })
-        );
-        authCTX.setAvatar(responseData.avatar);
-        console.log(responseData.avatar);
-        onClose();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    sendAvatar();
+
+    try {
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL +
+          `/users/${authCTX.userState.userId}`,
+        "PATCH",
+        JSON.stringify({
+          avatar: avatarInput,
+        })
+      );
+      authCTX.setAvatar(responseData.avatar);
+      onClose();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -110,8 +106,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-1"
                   name="avatar"
-                  value="Avatar-1"
-                  checked={avatarInput === "Avatar-1"}
+                  value="0"
+                  checked={avatarInput === "0"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-1">
@@ -121,8 +117,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-2"
                   name="avatar"
-                  value="Avatar-2"
-                  checked={avatarInput === "Avatar-2"}
+                  value="1"
+                  checked={avatarInput === "1"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-2">
@@ -132,8 +128,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-3"
                   name="avatar"
-                  value="Avatar-3"
-                  checked={avatarInput === "Avatar-3"}
+                  value="2"
+                  checked={avatarInput === "2"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-3">
@@ -143,8 +139,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-4"
                   name="avatar"
-                  value="Avatar-4"
-                  checked={avatarInput === "Avatar-4"}
+                  value="3"
+                  checked={avatarInput === "3"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-4">
@@ -154,8 +150,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-5"
                   name="avatar"
-                  value="Avatar-5"
-                  checked={avatarInput === "Avatar-5"}
+                  value="4"
+                  checked={avatarInput === "4"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-5">
@@ -165,8 +161,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-6"
                   name="avatar"
-                  value="Avatar-6"
-                  checked={avatarInput === "Avatar-6"}
+                  value="5"
+                  checked={avatarInput === "5"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-6">
@@ -176,8 +172,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-7"
                   name="avatar"
-                  value="Avatar-7"
-                  checked={avatarInput === "Avatar-7"}
+                  value="6"
+                  checked={avatarInput === "6"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-7">
@@ -187,8 +183,8 @@ function AvatarForm() {
                   type="radio"
                   id="avatar-8"
                   name="avatar"
-                  value="Avatar-8"
-                  checked={avatarInput === "Avatar-8"}
+                  value="7"
+                  checked={avatarInput === "7"}
                   onChange={avatarHandler}
                 />
                 <label htmlFor="avatar-8">
@@ -198,7 +194,13 @@ function AvatarForm() {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="green" mr={3} type="submit">
+              <Button
+                colorScheme="green"
+                mr={3}
+                type="submit"
+                isLoading={isLoading}
+                loadingText="Saving"
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>

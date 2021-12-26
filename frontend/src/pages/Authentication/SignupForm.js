@@ -1,13 +1,13 @@
 import { Fragment, useContext } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import signup_pic from "../../assets/signup.svg";
 import { useForm } from "../../util/Hooks/useForm";
 import { useFetch } from "../../util/Hooks/fetch-hook";
 import { AuthContext } from "../../util/context/auth-context";
+import ErrorModal from "../../components/Modals/ErrorModal";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
@@ -17,6 +17,7 @@ import {
 import styles from "./SignupForm.module.css";
 
 function SignupForm(props) {
+  let emailExist = false;
   const navigate = useNavigate();
   const authCTX = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
@@ -49,12 +50,15 @@ function SignupForm(props) {
       authCTX.login();
       navigate(`/${authCTX.userState.userId}`);
     } catch (err) {
-      console.log("error in submitting");
+      console.log(err.message);
+      emailExist = true;
+      console.log(emailExist);
     }
   }
 
   return (
     <Fragment>
+      {error ? <ErrorModal message={error} clearError={clearError} /> : null}
       <div className={styles.svg}>
         <img src={signup_pic} alt="" />
       </div>
@@ -76,6 +80,7 @@ function SignupForm(props) {
             errorText="Please enter a valid email"
             onInput={inputHandler}
           />
+
           <Input
             type="password"
             id="Password"
@@ -85,9 +90,16 @@ function SignupForm(props) {
             onInput={inputHandler}
           />
         </Flex>
-        <Buttons type="submit" disabled={!formState.isValid}>
+
+        <Button
+          type="submit"
+          disabled={!formState.isValid}
+          isLoading={isLoading}
+          loadingText="Submitting"
+          colorScheme="green"
+        >
           Sign Up &rarr;
-        </Buttons>
+        </Button>
         <div className={styles.footer}>
           <p>
             Already have an account?

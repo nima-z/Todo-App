@@ -11,7 +11,7 @@ import styles from "./MainHeader.module.css";
 function MainHeader() {
   const [avatar, setAvatar] = useState(null);
   const authCTX = useContext(AuthContext);
-  console.log(avatar);
+
   useEffect(() => {
     const masalan = svg(authCTX.userState.avatar);
     setAvatar(masalan);

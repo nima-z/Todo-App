@@ -1,0 +1,32 @@
+.main {
+  border-bottom: 1px solid lavender;
+}
+
+.action button {
+  color: black;
+  font-weight: 400;
+  cursor: pointer;
+  min-width: 32px;
+  min-height: 32px;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.priority {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.623);
+  border-radius: 2px;
+  padding: 0 4px;
+  background-color: rgb(180, 181, 190);
+  text-align: center;
+}
+
+.checkbox {
+  margin-left: 8px;
+  width: 32px;
+}

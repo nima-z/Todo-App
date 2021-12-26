@@ -54,11 +54,6 @@ function NewTask() {
       );
       authCTX.setTasks(1);
       authCTX.setList(response.task);
-      console.log(response.task);
-      console.log(authCTX.userState.list);
-
-      // localStorage.clear();
-      // localStorage.setItem("auth", JSON.stringify(authCTX.userState));
 
       onClose();
       setTitle("");
@@ -82,7 +77,7 @@ function NewTask() {
         isCentered
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxWidth="350px">
           <form onSubmit={onSubmitHandler}>
             <ModalHeader>Add a new task</ModalHeader>
             <ModalCloseButton />
@@ -104,7 +99,13 @@ function NewTask() {
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="green" mr={3} type="submit">
+              <Button
+                colorScheme="green"
+                mr={3}
+                type="submit"
+                isLoading={isLoading}
+                loadingText="Saving"
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>

@@ -7,7 +7,7 @@ import Avatar_6 from "../../assets/avatars/Avatar-6.svg";
 import Avatar_7 from "../../assets/avatars/Avatar-7.svg";
 import Avatar_8 from "../../assets/avatars/Avatar-8.svg";
 
-export function svg(picName) {
+export function svg(index) {
   const avatarsSVG = [
     Avatar_1,
     Avatar_2,
@@ -18,17 +18,7 @@ export function svg(picName) {
     Avatar_7,
     Avatar_8,
   ];
-  const avatarsString = [
-    "Avatar-1",
-    "Avatar-2",
-    "Avatar-3",
-    "Avatar-4",
-    "Avatar-5",
-    "Avatar-6",
-    "Avatar-7",
-    "Avatar-8",
-  ];
-  const index = avatarsString.indexOf(picName);
+
   const avatar = avatarsSVG[index];
   return avatar;
 }

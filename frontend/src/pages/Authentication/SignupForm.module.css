@@ -27,3 +27,7 @@ p {
 .footer p {
   margin-top: 1.7rem;
 }
+
+.emailExist {
+  color: red;
+}

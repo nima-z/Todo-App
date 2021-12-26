@@ -6,6 +6,14 @@
   overflow-y: scroll;
 }
 
+.container2 {
+  display: block;
+  width: 100%;
+  max-width: 375px;
+  height: 550px;
+  overflow-y: scroll;
+}
+
 .list {
   padding: 0 0.1rem;
   border-radius: 5px;

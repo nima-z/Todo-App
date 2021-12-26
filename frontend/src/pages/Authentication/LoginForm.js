@@ -1,13 +1,13 @@
 import { Fragment, useContext } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 import { AuthContext } from "../../util/context/auth-context";
 import { useNavigate } from "react-router-dom";
 
-import Buttons from "../../components/UI/Buttons";
 import Input from "../../components/Form/Input";
 import login_pic from "../../assets/login.svg";
 import { useForm } from "../../util/Hooks/useForm";
 import { useFetch } from "../../util/Hooks/fetch-hook";
+import ErrorModal from "../../components/Modals/ErrorModal";
 
 import {
   VALIDATOR_REQUIRE,
@@ -56,6 +56,8 @@ function LoginForm(props) {
 
   return (
     <Fragment>
+      {error ? <ErrorModal message={error} clearError={clearError} /> : null}
+
       <div className={styles.svg}>
         <img src={login_pic} alt="" />
       </div>
@@ -78,9 +80,15 @@ function LoginForm(props) {
             onInput={inputHandler}
           />
         </Flex>
-        <Buttons disabled={!formState.isValid} type="Submit">
+        <Button
+          type="submit"
+          disabled={!formState.isValid}
+          isLoading={isLoading}
+          loadingText="Logging in"
+          colorScheme="green"
+        >
           Login &rarr;
-        </Buttons>
+        </Button>
         <div className={styles.footer}>
           <p>
             Not a member?

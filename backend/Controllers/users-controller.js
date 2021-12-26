@@ -1,19 +1,27 @@
 const HttpError = require("../Models/http-error");
+const { validationResult } = require("express-validator");
 const User = require("../Models/users-model");
 
 // create new user
 async function createNewUser(req, res, next) {
+  console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your inputs.", 422)
+    );
+  }
   const { name, email, password } = req.body;
 
-  // let hasUser;
-  // try {
-  //   hasUser = await User.findOne({ email: email });
-  // } catch (err) {
-  //   return next(new HttpError("Could not connect to database to create user"));
-  // }
-  // if (hasUser) {
-  //   return next(new HttpError("This email exist already", 403));
-  // }
+  let hasUser;
+  try {
+    hasUser = await User.findOne({ email: email });
+  } catch (err) {
+    return next(new HttpError("Could not connect to database to create user"));
+  }
+  if (hasUser) {
+    return next(new HttpError("This email exist already", 403));
+  }
   const date = new Date();
   const readableDate = date.toLocaleDateString();
 

@@ -1,16 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Container } from "@chakra-ui/react";
 
 import MainHeader from "../../components/Navigation/MainHeader";
 import TodoList from "../../components/Todo/TodoList";
 import { AuthContext } from "../../util/context/auth-context";
 import { useFetch } from "../../util/Hooks/fetch-hook";
-import SortForm from "../../components/Form/SortForm";
+import ErrorModal from "../../components/Modals/ErrorModal";
 
-function MainPage(props) {
+function MainPage() {
   const authCTX = useContext(AuthContext);
-  const [loadedData, setLoadedData] = useState([]);
-  const { isLoading, error, clearError, sendRequest } = useFetch();
+  const { error, clearError, sendRequest } = useFetch();
 
   console.log("main");
 
@@ -25,16 +24,17 @@ function MainPage(props) {
 
         authCTX.setList(responseData.tasks);
         authCTX.setAvatar(responseData.user.avatar);
-        setLoadedData(authCTX.userState.list);
+        console.log("fetch again");
       } catch (err) {
         console.log(err);
       }
     };
     fetchTasks();
-  }, [authCTX.userState.tasks, authCTX.userState.avatar]);
+  }, [authCTX.userState.tasks]);
 
   return (
     <Container maxW="md" centerContent padding="0" textAlign="center">
+      {error ? <ErrorModal message={error} clearError={clearError} /> : null}
       <MainHeader />
       <TodoList />
     </Container>

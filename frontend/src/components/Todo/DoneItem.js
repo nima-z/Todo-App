@@ -4,51 +4,44 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
   Tr,
   Td,
   Button,
   Checkbox,
 } from "@chakra-ui/react";
 
-import EditTask from "../../pages/Tasks/EditTask";
 import { AuthContext } from "../../util/context/auth-context";
-import { useFetch } from "../../util/Hooks/fetch-hook";
 
-import styles from "./TodoItem.module.css";
+import styles from "./DoneItem.module.css";
 
-function TodoItem(props) {
+function DoneItem(props) {
   const authCTX = useContext(AuthContext);
-  const { isLoading, sendRequest } = useFetch();
   const stringDate = new Date(props.date).toLocaleString("en-US", {
     month: "short",
     day: "numeric",
   });
 
-  async function deleteHandler() {
-    try {
-      const responseData = await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/tasks/${props.id}`,
-        "DELETE"
-      );
+  function deleteHandler() {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_BACKEND_URL + `/tasks/${props.id}`,
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        const responseData = await response.json();
 
-      authCTX.setTasks(-1);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function checkDoneHandler() {
-    try {
-      const responseData = await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/tasks/done/${props.id}`,
-        "PATCH"
-      );
-
-      authCTX.setTasks(-1);
-    } catch (err) {
-      console.log(err);
-    }
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        authCTX.setTasks(-1);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sendRequest();
   }
 
   let proClass;
@@ -63,15 +56,16 @@ function TodoItem(props) {
   }
 
   return (
-    <Tr className={styles.main} maxWidth="375px">
+    <Tr className={styles.main} maxWidth="375px" bg="grey" opacity="90%">
       <Td padding="8px">
-        <form className={styles.checkbox} onSubmit={checkDoneHandler}>
+        <form className={styles.checkbox}>
           <Checkbox
-            onChange={checkDoneHandler}
             colorScheme="green"
             className={styles.checkbox}
             size="lg"
-          ></Checkbox>
+            defaultIsChecked
+            isDisabled
+          />
         </form>
       </Td>
       <Td padding="16px" minWidth="170px" paddingLeft="22px">
@@ -99,11 +93,6 @@ function TodoItem(props) {
                   {isOpen ? "..." : "..."}
                 </MenuButton>
                 <MenuList>
-                  <EditTask
-                    taskId={props.id}
-                    title={props.title}
-                    priority={props.priority}
-                  />
                   <Button
                     focus="none"
                     width="100%"
@@ -113,8 +102,6 @@ function TodoItem(props) {
                     bg="inherit"
                     borderRadius="0"
                     onClick={deleteHandler}
-                    isLoading={isLoading}
-                    loadingText="Deleting"
                   >
                     Delete
                   </Button>
@@ -128,4 +115,4 @@ function TodoItem(props) {
   );
 }
 
-export default TodoItem;
+export default DoneItem;
