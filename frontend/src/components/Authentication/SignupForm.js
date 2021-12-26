@@ -1,28 +1,27 @@
 import { Fragment, useContext } from "react";
 import { Flex, Button } from "@chakra-ui/react";
-import { AuthContext } from "../../util/context/auth-context";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../../components/Form/Input";
-import login_pic from "../../assets/login.svg";
+import Input from "../Input/Input";
+import signup_pic from "../../assets/signup.svg";
 import { useForm } from "../../util/Hooks/useForm";
-import { useFetch } from "../../util/Hooks/fetch-hook";
-import ErrorModal from "../../components/Modals/ErrorModal";
-
+import { useFetch } from "../../util/Hooks/useFetch";
+import { AuthContext } from "../../util/context/auth-context";
+import ErrorModal from "../Modals/ErrorModal";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
 } from "../../util/validators";
 
-import styles from "./LoginForm.module.css";
+import styles from "./SignupForm.module.css";
 
-function LoginForm(props) {
-  const authCTX = useContext(AuthContext);
+function SignupForm(props) {
   const navigate = useNavigate();
-
+  const authCTX = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
+      Name: { value: "", isValid: false },
       Email: { value: "", isValid: false },
       Password: { value: "", isValid: false },
     },
@@ -35,34 +34,41 @@ function LoginForm(props) {
 
     try {
       const responseData = await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + "/users/login",
+        process.env.REACT_APP_BACKEND_URL + "/users/signup",
         "POST",
         JSON.stringify({
+          name: formState.inputs.Name.value,
           email: formState.inputs.Email.value,
           password: formState.inputs.Password.value,
         })
       );
 
-      authCTX.login();
       authCTX.setId(responseData.user._id.toString());
       authCTX.setName(responseData.user.name);
-      authCTX.setTasks(responseData.user.tasks.length);
-      authCTX.setAvatar(responseData.user.avatar);
+      authCTX.setTasks(0);
+      authCTX.login();
       navigate(`/${authCTX.userState.userId}`);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
   return (
     <Fragment>
       {error ? <ErrorModal message={error} clearError={clearError} /> : null}
-
       <div className={styles.svg}>
-        <img src={login_pic} alt="" />
+        <img src={signup_pic} alt="" />
       </div>
       <form className={styles.form} onSubmit={submitHandler}>
         <Flex direction="column" align="flex-start">
+          <Input
+            type="text"
+            id="Name"
+            placeHolder="Name"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid name"
+            onInput={inputHandler}
+          />
           <Input
             type="email"
             id="Email"
@@ -71,6 +77,7 @@ function LoginForm(props) {
             errorText="Please enter a valid email"
             onInput={inputHandler}
           />
+
           <Input
             type="password"
             id="Password"
@@ -80,19 +87,23 @@ function LoginForm(props) {
             onInput={inputHandler}
           />
         </Flex>
+
         <Button
           type="submit"
           disabled={!formState.isValid}
           isLoading={isLoading}
-          loadingText="Logging in"
+          loadingText="Submitting"
           colorScheme="green"
         >
-          Login &rarr;
+          Sign Up &rarr;
         </Button>
         <div className={styles.footer}>
           <p>
-            Not a member?
-            <button onClick={props.onSignup}>Sign up</button>.
+            Already have an account?
+            <button type="button" onClick={props.onLogin}>
+              Login
+            </button>
+            .
           </p>
         </div>
       </form>
@@ -100,4 +111,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default SignupForm;

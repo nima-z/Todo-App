@@ -1,13 +1,12 @@
-import React from "react";
 import { Tbody, Tr, Td } from "@chakra-ui/react";
 
 import emptyList_pic from "../../assets/empty-list.svg";
 
-import NewTask from "../../pages/Tasks/NewTask";
+import NewTask from "../Actions/NewTask";
 
 import styles from "./EmptyList.module.css";
 
-function EmptyList(props) {
+function EmptyList() {
   return (
     <Tbody>
       <Tr>

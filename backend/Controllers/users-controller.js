@@ -4,7 +4,6 @@ const User = require("../Models/users-model");
 
 // create new user
 async function createNewUser(req, res, next) {
-  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -32,8 +31,6 @@ async function createNewUser(req, res, next) {
     createDate: readableDate,
     tasks: [],
   });
-
-  console.log(createdUser);
 
   try {
     await createdUser.save();
@@ -68,13 +65,11 @@ async function login(req, res, next) {
 async function addAvatar(req, res, next) {
   const { uid } = req.params;
   const { avatar } = req.body;
-  console.log(req.body);
 
   let user;
 
   try {
     user = await User.findOne({ _id: uid });
-    console.log(user);
   } catch (err) {
     return next(
       new HttpError("Finding user failed, please try again later", 500)

@@ -12,9 +12,9 @@ import {
 
 import { AuthContext } from "../../util/context/auth-context";
 
-import styles from "./DoneItem.module.css";
+import styles from "./DoneTask.module.css";
 
-function DoneItem(props) {
+function DoneTask(props) {
   const authCTX = useContext(AuthContext);
   const stringDate = new Date(props.date).toLocaleString("en-US", {
     month: "short",
@@ -44,17 +44,6 @@ function DoneItem(props) {
     sendRequest();
   }
 
-  let proClass;
-  if (props.priority === "High") {
-    proClass = "high";
-  }
-  if (props.priority === "Medium") {
-    proClass = "medium";
-  }
-  if (props.priority === "Low") {
-    proClass = "low";
-  }
-
   return (
     <Tr className={styles.main} maxWidth="375px" bg="grey" opacity="90%">
       <Td padding="8px">
@@ -73,9 +62,7 @@ function DoneItem(props) {
         <div className={styles.date}>{stringDate}</div>
       </Td>
       <Td padding="13px">
-        <div className={`${styles.priority}  ${styles[proClass]}`}>
-          {props.priority}
-        </div>
+        <div className={styles.priority}>{props.priority}</div>
       </Td>
       <Td padding="20px">
         <div className={styles.action}>
@@ -115,4 +102,4 @@ function DoneItem(props) {
   );
 }
 
-export default DoneItem;
+export default DoneTask;

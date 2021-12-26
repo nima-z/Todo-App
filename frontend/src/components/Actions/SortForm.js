@@ -1,6 +1,7 @@
-import React, { useReducer, useContext } from "react";
+import { useReducer, useContext } from "react";
 import { Tr, Th, Button } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+
 import { AuthContext } from "../../util/context/auth-context";
 
 import styles from "./SortForm.module.css";

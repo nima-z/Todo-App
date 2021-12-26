@@ -1,10 +1,8 @@
-import { useState, useCallback, useContext } from "react";
-import { AuthContext } from "../context/auth-context";
+import { useState, useCallback } from "react";
 
 export function useFetch() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const authCTX = useContext(AuthContext);
 
   const sendRequest = useCallback(async (url, method = "GET", body = null) => {
     setIsLoading(true);

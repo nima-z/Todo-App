@@ -1,8 +1,8 @@
 const HttpError = require("../Models/http-error");
-const Task = require("../Models/tasks-model");
-const User = require("../Models/users-model");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
+const Task = require("../Models/tasks-model");
+const User = require("../Models/users-model");
 
 async function getAllTasks(req, res, next) {
   const { uid } = req.params;
@@ -106,8 +106,6 @@ async function editTask(req, res, next) {
   const { tid } = req.params;
   const { title, priority } = req.body;
 
-  console.log(req.params);
-
   let task;
   try {
     task = await Task.findById(tid);
@@ -139,8 +137,6 @@ async function editTask(req, res, next) {
 
 async function doneTask(req, res, next) {
   const { tid } = req.params;
-
-  console.log(req.params);
 
   let task;
   try {

@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import AuthPage from "./pages/Authentication/AuthPage";
-import MainPage from "./pages/Tasks/MainPage";
+import AuthPage from "./pages/AuthPage";
+import MainPage from "./pages/MainPage";
 import { AuthContext } from "./util/context/auth-context";
 
 import "./App.css";

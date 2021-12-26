@@ -1,5 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState, useContext } from "react";
 
 import {
   Modal,
@@ -18,16 +17,15 @@ import {
 
 import plusSign from "../../assets/plus-sign.svg";
 import { AuthContext } from "../../util/context/auth-context";
-import { useFetch } from "../../util/Hooks/fetch-hook";
+import { useFetch } from "../../util/Hooks/useFetch";
 
 function NewTask() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState();
   const authCTX = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const { isLoading, error, clearError, sendRequest } = useFetch();
+  const { isLoading, sendRequest } = useFetch();
 
   const initialRef = useRef();
   const finalRef = useRef();
@@ -90,6 +88,7 @@ function NewTask() {
                   focus="none"
                   marginBottom="0.5rem"
                   value={title}
+                  ref={initialRef}
                 />
                 <Select placeholder="Priority" onChange={priorityHandler}>
                   <option value="High">High</option>

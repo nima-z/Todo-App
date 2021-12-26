@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { Menu, MenuButton, MenuList, Button, Avatar } from "@chakra-ui/react";
 
-import NewTask from "../../pages/Tasks/NewTask";
-import AvatarForm from "../Form/AvatarForm";
+import NewTask from "../Actions/NewTask";
+import AvatarForm from "../Avatar/AvatarForm";
 import { AuthContext } from "../../util/context/auth-context";
-import { svg } from "../Form/svg";
+import { svg } from "../Avatar/svg";
 
 import styles from "./MainHeader.module.css";
 

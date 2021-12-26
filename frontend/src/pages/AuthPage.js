@@ -1,11 +1,8 @@
-import { useState } from "react";
-
+import { useState, Fragment } from "react";
 import { Container } from "@chakra-ui/react";
 
-import { Fragment } from "react";
-
-import SignupForm from "./SignupForm";
-import LoginForm from "./LoginForm";
+import SignupForm from "../components/Authentication/SignupForm";
+import LoginForm from "../components/Authentication/LoginForm";
 
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(false);

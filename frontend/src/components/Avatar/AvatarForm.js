@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useContext } from "react";
 
 import {
   Modal,
@@ -11,19 +11,11 @@ import {
   useDisclosure,
   Button,
   FormControl,
-  Input,
-  Select,
-  Radio,
-  RadioGroup,
   Avatar,
-  HStack,
-  Box,
-  useRadio,
 } from "@chakra-ui/react";
 
-import { useFetch } from "../../util/Hooks/fetch-hook";
+import { useFetch } from "../../util/Hooks/useFetch";
 import { AuthContext } from "../../util/context/auth-context";
-import styles from "./AvatarForm.module.css";
 import image1 from "../../assets/avatars/Avatar-1.svg";
 import image2 from "../../assets/avatars/Avatar-2.svg";
 import image3 from "../../assets/avatars/Avatar-3.svg";
@@ -32,6 +24,8 @@ import image5 from "../../assets/avatars/Avatar-5.svg";
 import image6 from "../../assets/avatars/Avatar-6.svg";
 import image7 from "../../assets/avatars/Avatar-7.svg";
 import image8 from "../../assets/avatars/Avatar-8.svg";
+
+import styles from "./AvatarForm.module.css";
 
 function AvatarForm() {
   const [avatarInput, setAvatarInput] = useState("avatar-1");
@@ -109,6 +103,7 @@ function AvatarForm() {
                   value="0"
                   checked={avatarInput === "0"}
                   onChange={avatarHandler}
+                  ref={initialRef}
                 />
                 <label htmlFor="avatar-1">
                   <Avatar name="avatar-1" src={image1} size="md" />

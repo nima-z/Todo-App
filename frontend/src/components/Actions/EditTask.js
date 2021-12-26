@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 
 import {
   Modal,
@@ -15,7 +15,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-import { useFetch } from "../../util/Hooks/fetch-hook";
+import { useFetch } from "../../util/Hooks/useFetch";
 import { AuthContext } from "../../util/context/auth-context";
 
 function EditTask(props) {
@@ -44,7 +44,7 @@ function EditTask(props) {
     event.preventDefault();
 
     try {
-      const responseData = await sendRequest(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/tasks/${props.taskId}`,
         "PATCH",
         JSON.stringify({

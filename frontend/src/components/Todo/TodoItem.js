@@ -4,16 +4,15 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
   Tr,
   Td,
   Button,
   Checkbox,
 } from "@chakra-ui/react";
 
-import EditTask from "../../pages/Tasks/EditTask";
+import EditTask from "../Actions/EditTask";
 import { AuthContext } from "../../util/context/auth-context";
-import { useFetch } from "../../util/Hooks/fetch-hook";
+import { useFetch } from "../../util/Hooks/useFetch";
 
 import styles from "./TodoItem.module.css";
 
@@ -27,7 +26,7 @@ function TodoItem(props) {
 
   async function deleteHandler() {
     try {
-      const responseData = await sendRequest(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/tasks/${props.id}`,
         "DELETE"
       );
@@ -40,7 +39,7 @@ function TodoItem(props) {
 
   async function checkDoneHandler() {
     try {
-      const responseData = await sendRequest(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/tasks/done/${props.id}`,
         "PATCH"
       );
