@@ -10,14 +10,14 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 
-import EditTask from "../Actions/EditTask";
-import { AuthContext } from "../../util/context/auth-context";
-import { useFetch } from "../../util/Hooks/useFetch";
+import EditTask from "../Operations/EditTask";
+import { TaskContext } from "../../context/task-context";
+import { useFetch } from "../../Hooks/useFetch";
 
 import styles from "./TodoItem.module.css";
 
 function TodoItem(props) {
-  const authCTX = useContext(AuthContext);
+  const { dispatch } = useContext(TaskContext);
   const { isLoading, sendRequest } = useFetch();
   const stringDate = new Date(props.date).toLocaleString("en-US", {
     month: "short",
@@ -31,20 +31,7 @@ function TodoItem(props) {
         "DELETE"
       );
 
-      authCTX.setTasks(-1);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function checkDoneHandler() {
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/tasks/done/${props.id}`,
-        "PATCH"
-      );
-
-      authCTX.setTasks(-1);
+      dispatch({ type: "COUNTER", val: -1 });
     } catch (err) {
       console.log(err);
     }
@@ -62,27 +49,33 @@ function TodoItem(props) {
   }
 
   return (
-    <Tr className={styles.main} maxWidth="375px">
-      <Td padding="8px">
-        <form className={styles.checkbox} onSubmit={checkDoneHandler}>
+    <Tr
+      className={styles.main}
+      minWidth="350px"
+      display="flex"
+      justifyContent="space-around"
+      alignItems="center"
+    >
+      <Td padding="8px" border="none">
+        <form className={styles.checkbox}>
           <Checkbox
-            onChange={checkDoneHandler}
+            onChange={deleteHandler}
             colorScheme="green"
             className={styles.checkbox}
             size="lg"
           ></Checkbox>
         </form>
       </Td>
-      <Td padding="16px" minWidth="170px" paddingLeft="22px">
+      <Td padding="8px" minWidth="140px" paddingLeft="22px" border="none">
         <div className={styles.title}>{props.title}</div>
         <div className={styles.date}>{stringDate}</div>
       </Td>
-      <Td padding="13px">
+      <Td padding="8px" border="none">
         <div className={`${styles.priority}  ${styles[proClass]}`}>
           {props.priority}
         </div>
       </Td>
-      <Td padding="20px">
+      <Td padding="15px">
         <div className={styles.action}>
           <Menu>
             {({ isOpen }) => (

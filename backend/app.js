@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 const cors = require("cors");
 
 const usersRoutes = require("./Routes/users-routes");
@@ -12,12 +13,18 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// app.use(express.static(path.join("public")));
+
 app.use("/api/users", usersRoutes);
 app.use("/api/tasks", tasksRoutes);
 
 app.use((req, res, next) => {
-  throw new HttpError("This route does not exist.", 404);
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
+
+// app.use((req, res, next) => {
+//   throw new HttpError("This route does not exist.", 404);
+// });
 
 app.use((error, req, res, next) => {
   res
@@ -30,7 +37,9 @@ mongoose
     `mongodb+srv://${process.env.DB_user}:${process.env.DB_password}@cluster0.y9aro.mongodb.net/${process.env.DB_name}?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(process.env.PORT || 5000);
+    app.listen(process.env.PORT || 5000, () => {
+      console.log("listening on 5000");
+    });
   })
   .catch((err) => {
     console.log(err);

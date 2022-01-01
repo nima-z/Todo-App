@@ -1,59 +1,67 @@
-import React, { Fragment, useState, useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Table, Thead, Tbody } from "@chakra-ui/react";
 
 import TodoItem from "./TodoItem";
-import DoneTask from "../Actions/DoneTask";
-import SortForm from "../Actions/SortForm";
+import SortForm from "../Operations/SortForm";
 import EmptyList from "../../components/Todo/EmptyList";
-import { AuthContext } from "../../util/context/auth-context";
+import { TaskContext } from "../../context/task-context";
 
 import styles from "./TodoList.module.css";
 
 function TodoList() {
-  const [toggle, setToggle] = useState(false);
-  const authCTX = useContext(AuthContext);
+  const {
+    taskState: { sort, tasks: todoList },
+  } = useContext(TaskContext);
 
-  function listSorter() {
-    setToggle(!toggle);
+  function sortByDate(a, b) {
+    return sort.asc
+      ? a[sort.by] < b[sort.by]
+        ? 1
+        : -1
+      : a[sort.by] < b[sort.by]
+      ? -1
+      : 1;
+  }
+
+  function sortByPriority(a, b) {
+    const order = ["High", "Medium", "Low"];
+    return sort.asc
+      ? order.indexOf(a[sort.by]) < order.indexOf(b[sort.by])
+        ? 1
+        : -1
+      : order.indexOf(a[sort.by]) < order.indexOf(b[sort.by])
+      ? -1
+      : 1;
   }
 
   return (
     <Fragment>
-      <Table size="lg" maxWidth="375px">
-        <Thead maxWidth="375px">
-          <SortForm listSorter={listSorter} />
+      <Table minWidth="100%">
+        <Thead>
+          <SortForm />
         </Thead>
-        {authCTX.userState.list.length === 0 ? (
+        {todoList.length === 0 ? (
           <EmptyList />
         ) : (
-          <Fragment>
-            <Tbody className={styles.container}>
-              {authCTX.userState.list
-                .filter((task) => task.status === "UnDone")
-                .map((todo) => (
-                  <TodoItem
-                    title={todo.title}
-                    id={todo._id}
-                    key={todo._id}
-                    date={todo.createDate}
-                    priority={todo.priority}
-                  />
-                ))}
-            </Tbody>
-            <Tbody className={styles.container2}>
-              {authCTX.userState.list
-                .filter((task) => task.status === "Done")
-                .map((todo) => (
-                  <DoneTask
-                    title={todo.title}
-                    id={todo._id}
-                    key={todo._id}
-                    date={todo.createDate}
-                    priority={todo.priority}
-                  />
-                ))}
-            </Tbody>
-          </Fragment>
+          <Tbody className={styles.container}>
+            {todoList
+              .sort((a, b) => {
+                if (sort.by === "createDate") {
+                  return sortByDate(a, b);
+                } else {
+                  return sortByPriority(a, b);
+                }
+              })
+              .map((todo) => (
+                <TodoItem
+                  title={todo.title}
+                  id={todo._id}
+                  key={todo._id}
+                  date={todo.createDate}
+                  priority={todo.priority}
+                />
+              ))}
+          </Tbody>
         )}
       </Table>
     </Fragment>

@@ -10,6 +10,7 @@
 
 .description {
   color: rgba(160, 174, 192, 1);
+  text-align: center;
 }
 
 .description p:first-child {

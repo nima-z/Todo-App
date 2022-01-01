@@ -1,17 +1,16 @@
 .container {
   display: block;
-  width: 100%;
-  max-width: 375px;
   height: 550px;
   overflow-y: scroll;
 }
 
-.container2 {
-  display: block;
-  width: 100%;
-  max-width: 375px;
-  height: 550px;
-  overflow-y: scroll;
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .list {

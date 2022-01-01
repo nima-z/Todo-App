@@ -14,8 +14,8 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 
-import { useFetch } from "../../util/Hooks/useFetch";
-import { AuthContext } from "../../util/context/auth-context";
+import { useFetch } from "../../Hooks/useFetch";
+import { AuthContext } from "../../context/auth-context";
 import image1 from "../../assets/avatars/Avatar-1.svg";
 import image2 from "../../assets/avatars/Avatar-2.svg";
 import image3 from "../../assets/avatars/Avatar-3.svg";
@@ -31,7 +31,7 @@ function AvatarForm() {
   const [avatarInput, setAvatarInput] = useState("avatar-1");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoading, sendRequest } = useFetch();
-  const authCTX = useContext(AuthContext);
+  const { dispatch, authState } = useContext(AuthContext);
 
   const initialRef = useRef();
   const finalRef = useRef();
@@ -45,14 +45,13 @@ function AvatarForm() {
 
     try {
       const responseData = await sendRequest(
-        process.env.REACT_APP_BACKEND_URL +
-          `/users/${authCTX.userState.userId}`,
+        process.env.REACT_APP_BACKEND_URL + `/users/${authState.userId}`,
         "PATCH",
         JSON.stringify({
           avatar: avatarInput,
         })
       );
-      authCTX.setAvatar(responseData.avatar);
+      dispatch({ type: "AVATAR", val: responseData.avatar });
       onClose();
     } catch (err) {
       console.log(err);

@@ -16,14 +16,16 @@ import {
 } from "@chakra-ui/react";
 
 import plusSign from "../../assets/plus-sign.svg";
-import { AuthContext } from "../../util/context/auth-context";
-import { useFetch } from "../../util/Hooks/useFetch";
+import { TaskContext } from "../../context/task-context";
+import { AuthContext } from "../../context/auth-context";
+import { useFetch } from "../../Hooks/useFetch";
 
 function NewTask() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState();
-  const authCTX = useContext(AuthContext);
+  const { dispatch } = useContext(TaskContext);
+  const { authState } = useContext(AuthContext);
 
   const { isLoading, sendRequest } = useFetch();
 
@@ -47,11 +49,11 @@ function NewTask() {
         JSON.stringify({
           title,
           priority,
-          creatorId: authCTX.userState.userId,
+          creatorId: authState.userId,
         })
       );
-      authCTX.setTasks(1);
-      authCTX.setList(response.task);
+      dispatch({ type: "COUNTER", val: 1 });
+      dispatch({ type: "TASK", val: response.task });
 
       onClose();
       setTitle("");

@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import Input from "../Input/Input";
 import signup_pic from "../../assets/signup.svg";
-import { useForm } from "../../util/Hooks/useForm";
-import { useFetch } from "../../util/Hooks/useFetch";
-import { AuthContext } from "../../util/context/auth-context";
+import { useForm } from "../../Hooks/useForm";
+import { useFetch } from "../../Hooks/useFetch";
+import { AuthContext } from "../../context/auth-context";
 import ErrorModal from "../Modals/ErrorModal";
 import {
   VALIDATOR_REQUIRE,
@@ -18,7 +18,7 @@ import styles from "./SignupForm.module.css";
 
 function SignupForm(props) {
   const navigate = useNavigate();
-  const authCTX = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const [formState, inputHandler] = useForm(
     {
       Name: { value: "", isValid: false },
@@ -43,11 +43,14 @@ function SignupForm(props) {
         })
       );
 
-      authCTX.setId(responseData.user._id.toString());
-      authCTX.setName(responseData.user.name);
-      authCTX.setTasks(0);
-      authCTX.login();
-      navigate(`/${authCTX.userState.userId}`);
+      dispatch({
+        type: "LOGIN",
+        userId: responseData.user._id.toString(),
+        userName: responseData.user.name,
+        avatar: "",
+      });
+
+      navigate(`/${responseData.user._id.toString()}`);
     } catch (err) {
       console.log(err.message);
     }

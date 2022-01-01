@@ -15,15 +15,15 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-import { useFetch } from "../../util/Hooks/useFetch";
-import { AuthContext } from "../../util/context/auth-context";
+import { useFetch } from "../../Hooks/useFetch";
+import { TaskContext } from "../../context/task-context";
 
 function EditTask(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState();
   const { isLoading, sendRequest } = useFetch();
-  const authCTX = useContext(AuthContext);
+  const { dispatch } = useContext(TaskContext);
 
   const initialRef = useRef();
   const finalRef = useRef();
@@ -56,7 +56,7 @@ function EditTask(props) {
       console.log(err);
     }
 
-    authCTX.setTasks(0.0001);
+    dispatch({ type: "COUNTER", val: 0.0001 });
     onClose();
   }
 

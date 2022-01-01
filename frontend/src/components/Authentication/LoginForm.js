@@ -1,12 +1,13 @@
 import { Fragment, useContext } from "react";
 import { Flex, Button } from "@chakra-ui/react";
-import { AuthContext } from "../../util/context/auth-context";
 import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../../context/auth-context";
+import { TaskContext } from "../../context/task-context";
 import Input from "../Input/Input";
 import login_pic from "../../assets/login.svg";
-import { useForm } from "../../util/Hooks/useForm";
-import { useFetch } from "../../util/Hooks/useFetch";
+import { useForm } from "../../Hooks/useForm";
+import { useFetch } from "../../Hooks/useFetch";
 import ErrorModal from "../Modals/ErrorModal";
 import {
   VALIDATOR_REQUIRE,
@@ -17,7 +18,8 @@ import {
 import styles from "./LoginForm.module.css";
 
 function LoginForm(props) {
-  const authCTX = useContext(AuthContext);
+  const { dispatch: authDispatch } = useContext(AuthContext);
+  const { dispatch: taskDispatch } = useContext(TaskContext);
   const navigate = useNavigate();
 
   const [formState, inputHandler] = useForm(
@@ -42,12 +44,18 @@ function LoginForm(props) {
         })
       );
 
-      authCTX.login();
-      authCTX.setId(responseData.user._id.toString());
-      authCTX.setName(responseData.user.name);
-      authCTX.setTasks(responseData.user.tasks.length);
-      authCTX.setAvatar(responseData.user.avatar);
-      navigate(`/${authCTX.userState.userId}`);
+      authDispatch({
+        type: "LOGIN",
+        userId: responseData.user._id.toString(),
+        userName: responseData.user.name,
+        avatar: responseData.user.avatar,
+      });
+      taskDispatch({
+        type: "COUNTER",
+        val: responseData.user.tasks.length,
+      });
+
+      navigate(`/${responseData.user._id.toString()}`);
     } catch (err) {
       console.log(err);
     }

@@ -3,19 +3,19 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
 
 import AuthPage from "./pages/AuthPage";
-// import MainPage from "./pages/MainPage";
-import { AuthContext } from "./util/context/auth-context";
+import MainPage from "./pages/MainPage";
+import { AuthContext } from "./context/auth-context";
 
 import "./App.css";
 
-const MainPage = React.lazy(() => import("./pages/MainPage"));
+// const MainPage = React.lazy(() => import("./pages/MainPage"));
 
 function App() {
-  const authCTX = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
 
   let routes;
 
-  if (authCTX.userState.isLoggedin) {
+  if (authState.isLoggedin) {
     routes = (
       <Routes>
         <Route path="/:uid/" element={<MainPage />} />

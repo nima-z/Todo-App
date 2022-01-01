@@ -1,21 +1,25 @@
 import { useContext, useState, useEffect } from "react";
 import { Menu, MenuButton, MenuList, Button, Avatar } from "@chakra-ui/react";
 
-import NewTask from "../Actions/NewTask";
+import NewTask from "../Operations/NewTask";
 import AvatarForm from "../Avatar/AvatarForm";
-import { AuthContext } from "../../util/context/auth-context";
+import { AuthContext } from "../../context/auth-context";
 import { svg } from "../Avatar/svg";
 
 import styles from "./MainHeader.module.css";
 
 function MainHeader() {
   const [avatar, setAvatar] = useState(null);
-  const authCTX = useContext(AuthContext);
+  const { dispatch, authState } = useContext(AuthContext);
 
   useEffect(() => {
-    const masalan = svg(authCTX.userState.avatar);
+    const masalan = svg(authState.avatar);
     setAvatar(masalan);
-  }, [authCTX.userState.avatar]);
+  }, [authState.avatar]);
+
+  function logoutHandler() {
+    dispatch({ type: "LOGOUT" });
+  }
 
   return (
     <header className={styles.header}>
@@ -35,11 +39,7 @@ function MainHeader() {
                 _active={{ bg: "none" }}
                 _focus={{ boxShadow: "none" }}
               >
-                <Avatar
-                  name={authCTX.userState.userName}
-                  src={avatar}
-                  size="lg"
-                />
+                <Avatar name={authState.userName} src={avatar} size="lg" />
               </MenuButton>
               <MenuList>
                 <AvatarForm />
@@ -47,7 +47,7 @@ function MainHeader() {
                   focus="none"
                   width="100%"
                   justifyContent="flex-start"
-                  onClick={authCTX.logout}
+                  onClick={logoutHandler}
                   _active={{ bg: "none" }}
                   _focus={{ boxShadow: "none" }}
                   bg="inherit"
@@ -64,7 +64,7 @@ function MainHeader() {
         </div>
       </div>
       <div className={styles.title}>
-        <h1>{`${authCTX.userState.userName}'s list`}</h1>
+        <h1>{`${authState.userName}'s list`}</h1>
         <p>A goal without a plan is just a wish!</p>
       </div>
     </header>
