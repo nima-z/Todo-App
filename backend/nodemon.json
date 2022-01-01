@@ -1,7 +1,0 @@
-{
-  "env": {
-    "DB_user": "nima",
-    "DB_password": "9EMmGaolDZRb7lIt",
-    "DB_name": "todoApp"
-  }
-}
