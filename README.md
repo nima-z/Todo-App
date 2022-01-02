@@ -1,12 +1,11 @@
 # Todo-App
 A task manager application.
 
-it has been written based on MERN with features like CRUD.
+it has been written based on <i>MERN</i> with features like <i>CRUD</i>.<br>
 for using this app, you need to signup and then you will have your own Todo-list.
 
-features: \n
-.Select an avatar
-.Edit tasks
-.Set priority for every task
-.Sort Todo-list by date or priority
-
+<b>features: </b>
+<br> .Select avatar
+<br> .Edit tasks
+<br> .Set priority for every task
+<br> .Sort Todo-list by date or priority
